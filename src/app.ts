@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import sequelize from './utils/DB';
 import { userRoutes } from './routes/user.route';
 import { ApiError } from './utils/ApiError';
+var jwt = require('express-jwt');
 var morgan = require('morgan')
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.json({
     }
 }));
 
+app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['RS256'] }).unless({path: ['/register']}));
 app.use(userRoutes)
 
 app.use((err:any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -24,7 +26,13 @@ app.use((err:any, req: express.Request, res: express.Response, next: express.Nex
             message: err.message
         });
         return
-    } else {
+    } else if (err.name === 'UnauthorizedError') {
+        res.status(401).send({
+            statusCode: 401,
+            message: "Unauthorized"
+        });
+      }
+    else {
         console.log(err)
         res.status(500).json({
             statusCode: 500,

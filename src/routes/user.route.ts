@@ -93,9 +93,11 @@ userRoutes.post('/register', validateParams(checkSchema({
     trim: true
   }
 })), asyncHandler(async (req, res) => {
-  const { password ,...fields} = req.body;
+  const { password, email,...fields} = req.body;
+
+  if (await UserModel.findOne({ where: { email }})) throw new ApiError("Email already registered")
 
   const hashedPass = await hash(password, 8)
-  await UserModel.create({ password: hashedPass, ...fields})
+  await UserModel.create({ password: hashedPass, email, ...fields})
   res.send({ success: 'User created' });
 }));
