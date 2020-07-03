@@ -1,7 +1,7 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import sequelize from './utils/DB';
-import { userRoutes } from './routes/user.route';
+import { routes } from './routes';
 import { ApiError } from './utils/ApiError';
 var jwt = require('express-jwt');
 var morgan = require('morgan')
@@ -16,8 +16,8 @@ app.use(bodyParser.json({
     }
 }));
 
-app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['RS256'] }).unless({path: ['/register']}));
-app.use(userRoutes)
+app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['RS256'] }).unless({path: ['/register', '/login']}));
+app.use(routes)
 
 app.use((err:any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (err instanceof ApiError) {
