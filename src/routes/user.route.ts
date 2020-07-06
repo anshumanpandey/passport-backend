@@ -211,7 +211,7 @@ userRoutes.put('/editProfile', validateParams(checkSchema({
   const { password, email,...fields} = req.body;
 
   // @ts-ignore
-  if (await UserModel.findOne({ where: { email, id: { [Op.lt]: req.user.id} }})) throw new ApiError("Email already registered")
+  if (await UserModel.findOne({ where: { email, id: { [Op.ne]: req.user.id} }})) throw new ApiError("Email already registered")
 
   const dataToUpdate = {email, ...fields}
 

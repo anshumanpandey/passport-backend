@@ -1,17 +1,14 @@
 import express from 'express';
 import asyncHandler from "express-async-handler"
 import { checkSchema } from "express-validator"
-import { UserModel } from '../models/user.model';
 import { validateParams } from '../middlewares/routeValidation.middleware';
-import { ApiError } from '../utils/ApiError';
-import { AchivementModel } from '../models/achivement.model';
 import { FeedbackModel } from '../models/feedback.model';
 
 export const feedbackRoutes = express();
 
-feedbackRoutes.post('/feedback', validateParams(checkSchema({
-  id: {
-    in: ['body'],
+feedbackRoutes.post('/feedback/:achivementId', validateParams(checkSchema({
+  achivementId: {
+    in: ['params'],
     exists: {
       errorMessage: 'Missing field'
     },
@@ -26,8 +23,8 @@ feedbackRoutes.post('/feedback', validateParams(checkSchema({
   },
   validated: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
+    isBoolean: {
+      errorMessage: 'Field must be boolean'
     },
     trim: true
   },
@@ -40,34 +37,13 @@ feedbackRoutes.post('/feedback', validateParams(checkSchema({
   },
   skillsWithExperience: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
     trim: true
   },
   skillsWithImproving: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
     trim: true
   },
 })), asyncHandler(async (req, res) => {
-  await AchivementModel.create(req.body);
-  res.send({ success: 'Achivement created' });
-}));
-
-feedbackRoutes.get('/feedback/', validateParams(checkSchema({
-  achivementId: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    trim: true
-  },
-})),asyncHandler(async (req, res) => {
-  //@ts-ignore
-  const achivement = await FeedbackModel.findOne({ where: { AchivementId: req.body.achivementId } })
-  if (!achivement) throw new ApiError("Achivement not found")
-  res.send({ success: 'User created' });
+  await FeedbackModel.create({ ...req.body, AchivementId: req.params.achivementId });
+  res.send({ success: 'Feedback created' });
 }));

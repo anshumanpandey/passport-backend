@@ -15,6 +15,10 @@ app.use(bodyParser.json({
         req.rawBody = buf;
     }
 }));
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true,
+}));
 
 app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }).unless({path: ['/register', '/login']}));
 app.use(routes)

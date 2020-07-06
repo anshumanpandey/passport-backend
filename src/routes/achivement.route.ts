@@ -5,6 +5,7 @@ import { validateParams } from '../middlewares/routeValidation.middleware';
 import { ApiError } from '../utils/ApiError';
 import { AchivementModel } from '../models/achivement.model';
 import multer from 'multer';
+import { FeedbackModel } from '../models/feedback.model';
 
 let storage = multer.diskStorage({
   destination: 'uploads/',
@@ -17,7 +18,7 @@ var upload = multer({ storage })
 
 export const achivementRoutes = express();
 
-achivementRoutes.post('/feedback', upload.single("awardFile"),validateParams(checkSchema({
+achivementRoutes.post('/achivement', upload.single("awardFile"),validateParams(checkSchema({
   title: {
     in: ['body'],
     exists: {
@@ -152,27 +153,12 @@ achivementRoutes.post('/feedback', upload.single("awardFile"),validateParams(che
   //@ts-ignore
   console.log(req.file)
   //@ts-ignore
-  await AchivementModel.create({...req.body, UserId: req.user.id});
+  await AchivementModel.create({...req.body, awardFilename: req.file.filename,UserId: req.user.id});
   res.send({ success: 'Achivement created' });
 }));
 
 achivementRoutes.get('/achivement/', asyncHandler(async (req, res) => {
   //@ts-ignore
-  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id } })
+  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel }] })
   res.send(achivements);
-}));
-
-achivementRoutes.get('/achivement/:id', validateParams(checkSchema({
-  id: {
-    in: ['params'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    trim: true
-  },
-})), asyncHandler(async (req, res) => {
-  //@ts-ignore
-  const achivement = await AchivementModel.findOne({ where: { id: req.body.id, UserId: req.user.id } })
-  if (!achivement) throw new ApiError("Achivement not found")
-  res.send({ success: 'User created' });
 }));

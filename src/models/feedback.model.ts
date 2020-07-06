@@ -8,6 +8,7 @@ export interface FeedbackAttributes {
   fullname: string
   validated: string
   description: string
+  engagementDescription: string
   skillsWithExperience: string
   skillsWithImproving: string
 }
@@ -34,17 +35,43 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
     type: DataTypes.STRING,
     allowNull: false
   },
+  engagementDescription: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   skillsWithExperience: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    get () {
+      const rawValue = this.getDataValue('skillsWithExperience');
+      return rawValue? rawValue.split(',') : [];
+    },
+    set(value) {
+      if (Array.isArray(value)) {
+        this.setDataValue('skillsWithExperience', value.map(i=>i.trim()).join(','));
+      } else if (typeof value == "string") {
+        this.setDataValue('skillsWithExperience', value);
+      }
+    }
   },
   skillsWithImproving: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    get () {
+      const rawValue = this.getDataValue('skillsWithImproving');
+      return rawValue? rawValue.split(',') : [];
+    },
+    set(value) {
+      if (Array.isArray(value)) {
+        this.setDataValue('skillsWithImproving', value.map(i=>i.trim()).join(','));
+      } else if (typeof value == "string") {
+        this.setDataValue('skillsWithImproving', value);
+      }
+    }
   },
 })
 
-AchivementModel.hasOne(FeedbackModel, {
+AchivementModel.hasMany(FeedbackModel, {
   foreignKey: {
     allowNull: false
   }
