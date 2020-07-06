@@ -22,6 +22,7 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
   },
   fullname: {
     type: DataTypes.STRING,

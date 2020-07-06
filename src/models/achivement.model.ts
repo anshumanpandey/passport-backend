@@ -30,6 +30,7 @@ export const AchivementModel = sequelize.define<UserInstance>("Achivement", {
   id: {
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
   },
   title: {
     type: DataTypes.STRING,

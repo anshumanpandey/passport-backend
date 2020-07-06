@@ -22,6 +22,7 @@ export const UserModel = sequelize.define<UserInstance>("User", {
     id: {
       primaryKey: true,
       type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
     },
     firstName: {
       type: DataTypes.STRING,
