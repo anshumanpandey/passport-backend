@@ -1,5 +1,6 @@
 import express from 'express';
 import asyncHandler from "express-async-handler"
+import { Op } from "sequelize"
 import { checkSchema } from "express-validator"
 import { sign } from 'jsonwebtoken'
 import { hash, compare } from "bcrypt"
@@ -15,12 +16,20 @@ userRoutes.post('/login', validateParams(checkSchema({
     exists: {
       errorMessage: 'Missing field'
     },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
     trim: true
   },
   password: {
     in: ['body'],
     exists: {
       errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
     },
     trim: true
   },
@@ -32,7 +41,7 @@ userRoutes.post('/login', validateParams(checkSchema({
   });
 
   if (!user) throw new ApiError("User not found")
-  if (!await compare(password, user.password)) throw new ApiError("User not found")
+  if (!await compare(password, user.password)) throw new ApiError("Email or password incorrect")
 
   const jsonData = user.toJSON();
   //@ts-ignore
@@ -47,6 +56,10 @@ userRoutes.post('/register', validateParams(checkSchema({
     exists: {
       errorMessage: 'Missing field'
     },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
     trim: true
   },
   lastName: {
@@ -54,12 +67,20 @@ userRoutes.post('/register', validateParams(checkSchema({
     exists: {
       errorMessage: 'Missing field'
     },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
     trim: true
   },
   email: {
     in: ['body'],
     exists: {
       errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
     },
     trim: true,
     normalizeEmail: true
@@ -69,12 +90,20 @@ userRoutes.post('/register', validateParams(checkSchema({
     exists: {
       errorMessage: 'Missing field'
     },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
     trim: true
   },
   phoneNumber: {
     in: ['body'],
     exists: {
       errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
     },
     trim: true
   },
@@ -83,12 +112,20 @@ userRoutes.post('/register', validateParams(checkSchema({
     exists: {
       errorMessage: 'Missing field'
     },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
     trim: true
   },
   companyName: {
     in: ['body'],
     exists: {
       errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
     },
     trim: true
   }
@@ -100,4 +137,98 @@ userRoutes.post('/register', validateParams(checkSchema({
   const hashedPass = await hash(password, 8)
   await UserModel.create({ password: hashedPass, email, ...fields})
   res.send({ success: 'User created' });
+}));
+
+userRoutes.put('/editProfile', validateParams(checkSchema({
+  firstName: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  lastName: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  email: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true,
+    normalizeEmail: true
+  },
+  phoneNumber: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  companyTitle: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  companyName: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  }
+})), asyncHandler(async (req, res) => {
+  const { password, email,...fields} = req.body;
+
+  // @ts-ignore
+  if (await UserModel.findOne({ where: { email, id: { [Op.lt]: req.user.id} }})) throw new ApiError("Email already registered")
+
+  const dataToUpdate = {email, ...fields}
+
+  if (password) {
+    const hashedPass = await hash(password, 8)
+    dataToUpdate.password = hashedPass;
+  }
+
+  //@ts-ignore
+  await UserModel.update(dataToUpdate, { where: { id: req.user.id }})
+  //@ts-ignore
+  const user = await UserModel.findByPk(req.user.id, { attributes: { exclude: ["createdAt", "updatedAt"]} })
+  if (!user) throw new ApiError("User not found")
+
+  const jsonData = user.toJSON();
+  //@ts-ignore
+  delete jsonData.password;
+  var token = sign(jsonData, process.env.JWT_SECRET || 'aa');
+  res.send({ ...jsonData, token });
 }));

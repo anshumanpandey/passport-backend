@@ -2,6 +2,7 @@ import sequelize from "../utils/DB";
 
 import { DataTypes, Model, Optional } from "sequelize";
 import { UserModel } from "./user.model";
+import { FeedbackAttributes } from "./feedback.model";
 
 interface AchivementAttributes {
   id: string,
@@ -17,6 +18,7 @@ interface AchivementAttributes {
   collegueName: string
   colleguePhonenumber: string
   collegueRole: string
+  feedbacks?: FeedbackAttributes | FeedbackAttributes['id'];
 }
 
 interface AchivementCreationAttributes extends Optional<AchivementAttributes, "id"> { }

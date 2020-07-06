@@ -16,7 +16,7 @@ app.use(bodyParser.json({
     }
 }));
 
-app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['RS256'] }).unless({path: ['/register', '/login']}));
+app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }).unless({path: ['/register', '/login']}));
 app.use(routes)
 
 app.use((err:any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -27,6 +27,7 @@ app.use((err:any, req: express.Request, res: express.Response, next: express.Nex
         });
         return
     } else if (err.name === 'UnauthorizedError') {
+        console.log(err)
         res.status(401).send({
             statusCode: 401,
             message: "Unauthorized"
