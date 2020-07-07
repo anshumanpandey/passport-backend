@@ -6,6 +6,7 @@ import { ApiError } from '../utils/ApiError';
 import { AchivementModel } from '../models/achivement.model';
 import multer from 'multer';
 import { FeedbackModel } from '../models/feedback.model';
+import { sendEmail } from '../utils/Mail';
 
 let storage = multer.diskStorage({
   destination: 'uploads/',
@@ -152,6 +153,7 @@ achivementRoutes.post('/achivement', upload.single("awardFile"),validateParams(c
 })),asyncHandler(async (req, res) => {
   //@ts-ignore
   console.log(req.file)
+  await sendEmail(req.body.colleguePhonenumber);
   //@ts-ignore
   await AchivementModel.create({...req.body, awardFilename: req.file.filename,UserId: req.user.id});
   res.send({ success: 'Achivement created' });
