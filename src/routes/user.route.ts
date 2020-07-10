@@ -1,4 +1,5 @@
 import express from 'express';
+var jwt = require('express-jwt');
 import asyncHandler from "express-async-handler"
 import { Op } from "sequelize"
 import { checkSchema } from "express-validator"
@@ -139,7 +140,7 @@ userRoutes.post('/register', validateParams(checkSchema({
   res.send({ success: 'User created' });
 }));
 
-userRoutes.put('/editProfile', validateParams(checkSchema({
+userRoutes.put('/editProfile', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),validateParams(checkSchema({
   firstName: {
     in: ['body'],
     exists: {

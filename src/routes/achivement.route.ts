@@ -1,5 +1,6 @@
 import express from 'express';
 import asyncHandler from "express-async-handler"
+var jwt = require('express-jwt');
 import { checkSchema } from "express-validator"
 import { validateParams } from '../middlewares/routeValidation.middleware';
 import { ApiError } from '../utils/ApiError';
@@ -19,7 +20,7 @@ var upload = multer({ storage })
 
 export const achivementRoutes = express();
 
-achivementRoutes.post('/achivement', upload.single("awardFile"),validateParams(checkSchema({
+achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),upload.single("awardFile"),validateParams(checkSchema({
   title: {
     in: ['body'],
     exists: {
@@ -158,7 +159,7 @@ achivementRoutes.post('/achivement', upload.single("awardFile"),validateParams(c
   res.send({ success: 'Achivement created' });
 }));
 
-achivementRoutes.get('/achivement/', asyncHandler(async (req, res) => {
+achivementRoutes.get('/achivement/', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),asyncHandler(async (req, res) => {
   //@ts-ignore
   const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel }] })
   res.send(achivements);

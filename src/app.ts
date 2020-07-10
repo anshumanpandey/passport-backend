@@ -4,7 +4,6 @@ import * as bodyParser from 'body-parser';
 import sequelize from './utils/DB';
 import { routes } from './routes';
 import { ApiError } from './utils/ApiError';
-var jwt = require('express-jwt');
 var morgan = require('morgan')
 
 const app = express();
@@ -21,9 +20,10 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 
+app.use("/feedback",express.static(join(__dirname, '..', 'feedback-form', 'build')));
 app.use(express.static(join(__dirname, '../templates')));
 
-app.use('/api',jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }).unless({path: ['/api/register', '/api/login']}),routes)
+app.use('/api',routes)
 
 app.use((err:any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (err instanceof ApiError) {
