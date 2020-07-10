@@ -1,59 +1,155 @@
 import React, { useState } from 'react';
 import { parse } from "query-string"
+import useAxios from 'axios-hooks'
+import { Formik } from 'formik';
 import passportico from './img/passportico.svg';
 import './App.css';
 import { PassportButton } from './components/PassportButton';
+import { ErrorLabel } from './components/ErroLabel';
+
+const Skils = [
+  "Web Dev",
+  "Design",
+  "Marketing",
+  "Sales",
+  "Languages",
+  "Life",
+  "Social Skills",
+  "Client",
+  "Extra Mile",
+  "Organization",
+  "Communication",
+  "Management",
+  "Account & Finance",
+  "Education",
+  "BI / Data Science",
+];
+
+type FormValues = {
+  name: string
+  validated: null | boolean,
+  description: string,
+  goodSkills: { [k: string]: string }
+  badSkills: { [k: string]: string }
+  badDescription: string,
+  wouldReachAgain: null | boolean
+}
 
 function App() {
   const params = parse(window.location.search)
 
-  const [name, setName] = useState(params.name);
+  const fValues: FormValues = {
+    name: params.name?.toString() || "",
+    validated: null,
+    description: '',
+    goodSkills: {},
+    badSkills: {},
+    badDescription: '',
+    wouldReachAgain: null
+  }
+
+  const [name, setName] = useState();
   const [changeName, setChangeName] = useState(false);
-  const [validated, setValidated] = useState<boolean | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [goodSkills, setGoodSkills] = useState<{ [k: string]: string }>({});
-  const [badSkills, setBadSkills] = useState<{ [k: string]: string }>({});
-  const [badDescription, setBadDescription] = useState<null | string>(null);
-  const [wouldReachAgain, setWouldReachAgain] = useState<boolean | null>(null);
+
+  const [{ data, loading, error }, post] = useAxios({
+    url: `http://localhost:5000/api/feedback/${params.token}`,
+    method: 'POST'
+  }, { manual: true })
 
   return (
     <>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" />
-
-        <title>Hello, world!</title>
-      </head>
-
-      <body>
-        <div className="container-fluid">
-          <div className="row header">
-            <div className="col-12">
-              <h2>Passport</h2>
-              <h5>Your career companion</h5>
-            </div>
-            <img src={passportico} alt="icon" />
+      <div className="container-fluid">
+        <div className="row header">
+          <div className="col-12">
+            <h2>Passport</h2>
+            <h5>Your career companion</h5>
           </div>
+          <img src={passportico} alt="icon" />
+        </div>
 
-          <div className="row middle">
-            <div className="body col-10">
+        <Formik
+          initialValues={fValues}
+          validate={values => {
+            const errors: any = {}
+            if (values.validated == null) errors.validated = "You must select an option"
+            if (values.wouldReachAgain == null) errors.validated = "You must select an option"
+            if (!values.description) errors.description = "Required field"
+            if (!values.name) errors.name = "Required field"
+            if (Object.keys(values.goodSkills).length == 0) errors.goodSkills = "You must select at least one skill"
+            if (Object.keys(values.badSkills).length == 0) errors.badSkills = "You must select at least one skill"
+            return errors;
+          }}
 
+          onSubmit={(values) => {
+            post({
+              data: {
+                fullname: values.name,
+                validated: values.validated,
+                description: values.description,
+                skillsWithExperience: Object.keys(values.goodSkills).join(','),
+                skillsWithImproving: Object.keys(values.badSkills).join(','),
+                engagementDescription: values.badDescription,
+                wouldReachAgain: values.wouldReachAgain
+              }
+            })
 
-              <div className="ask-item">
-                <p>1 - Are you Florian Guerin, job titiel etc</p>
-                <div>
-                  <PassportButton onClick={() => setChangeName(true)} text="Yes" />
-                  <PassportButton onClick={() => setChangeName(false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
-                  {changeName && (
+          }}
+
+        >
+
+          {({ handleSubmit, handleChange, values, setFieldValue, errors, touched }) => (
+
+            <div className="row middle">
+              <div className="body col-10">
+
+                <div className="ask-item">
+                  <p>1 - Are you {params.name}, {params.title || ""} etc ? {!changeName ? 'Yes' : 'No'} </p>
+                  <div>
+                    <PassportButton onClick={() => setChangeName(false)} text="Yes" />
+                    <PassportButton onClick={() => setChangeName(true)} text="No, modify" type="Normal" style={{ marginLeft: '1rem', }} />
+                    {changeName && (
+                      <textarea
+                        onChange={handleChange}
+                        value={values.name}
+                        name="name"
+                        placeholder="Your name"
+                        style={{
+                          marginTop: '1rem',
+                          padding: '2rem',
+                          height: '1rem',
+                          width: '95%',
+                          backgroundColor: 'rgba(119, 195, 242, 0.1)',
+                          border: 0,
+                          borderRadius: '8px',
+                        }}>
+
+                      </textarea>
+                    )}
+                    {errors.name && touched.name ? <ErrorLabel text={errors.name} /> : null}
+                  </div>
+                </div>
+
+                <div className="ask-item">
+                  <p>2 - Do you validate the achievement ? {values.validated == true && 'Yes'} {values.validated == false && 'No'}</p>
+                  <div>
+                    <PassportButton onClick={() => setFieldValue("validated", true)} text="Yes" />
+                    <PassportButton onClick={() => setFieldValue("validated", false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                  </div>
+                  {errors.validated && touched.validated ? <ErrorLabel text={errors.validated} /> : null}
+                </div>
+
+                <div className="ask-item">
+                  <p>3 - In 50 words or less, could you describe how “Nicolas Fatout” achieved this performance? What were the obstacles? What was the impact?</p>
+
+                  <div>
                     <textarea
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
+                      onChange={handleChange}
+                      value={values.description}
+                      name="description"
+                      placeholder="Description"
                       style={{
-                        marginTop: '1rem',
+                        height: '15rem',
                         padding: '2rem',
-                        height: '1rem',
                         width: '95%',
                         backgroundColor: 'rgba(119, 195, 242, 0.1)',
                         border: 0,
@@ -61,28 +157,114 @@ function App() {
                       }}>
 
                     </textarea>
-                  )}
+                  </div>
+                  {errors.description && touched.description ? <ErrorLabel text={errors.description} /> : null}
                 </div>
-              </div>
 
-              <div className="ask-item">
-                <p>2 - Do you validate the achievement</p>
-                <div>
-                  <PassportButton onClick={() => setValidated(true)} text="Yes" />
-                  <PassportButton onClick={() => setValidated(false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                <div className="ask-item">
+                  <p>4 - Please select 1 or 2 skills that he demonstrated and used for this experience ?</p>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {Skils.map((i, idx) => {
+                      return (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            const n = { ...values.goodSkills };
+                            if (n[i]) {
+                              delete n[i]
+                            } else {
+                              n[i] = i
+                            }
+                            setFieldValue("goodSkills", n)
+                          }}
+                          style={{
+                            width: '6rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: "1px solid #99879D",
+                            backdropFilter: 'blur(81.5485px)',
+                            borderRadius: '4px',
+                            marginRight: '1rem',
+                            marginBottom: '1rem',
+                            backgroundColor: values.goodSkills[i] != undefined ? '#3DC35B30' : 'transparent',
+                          }}>
+                          <p style={{
+                            justifyContent: 'center',
+                            paddingLeft: '0.5rem',
+                            paddingRight: '0.5rem',
+                            fontFamily: 'ABeeZee',
+                            fontSize: '9px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            color: '#3DC35B',
+                          }}>{i}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {errors.goodSkills && touched.goodSkills ? <ErrorLabel text={errors.goodSkills.toString()} /> : null}
                 </div>
-              </div>
 
-              <div className="ask-item">
-                <p>3 - In 50 words or less, could you describe how “Nicolas Fatout” achieved this performance? What were the obstacles? What was the impact?</p>
 
-                <div>
+                <div className="ask-item">
+                  <p>5 - Please select 1 skill “Nicolas Fatout” is currently working on or should continue improving according to you?</p>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {Skils.map((i, idx) => {
+                      return (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            const n = { ...values.badSkills };
+                            if (n[i]) {
+                              delete n[i]
+                            } else {
+                              n[i] = i
+                            }
+                            setFieldValue("badSkills", n)
+                          }}
+                          style={{
+                            width: '6rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: "1px solid #99879D",
+                            backdropFilter: 'blur(81.5485px)',
+                            borderRadius: '4px',
+                            marginRight: '1rem',
+                            marginBottom: '1rem',
+                            backgroundColor: values.badSkills[i] != undefined ? '#83A0F430' : 'transparent',
+                          }}>
+                          <p style={{
+                            justifyContent: 'center',
+                            paddingLeft: '0.5rem',
+                            paddingRight: '0.5rem',
+                            fontFamily: 'ABeeZee',
+                            fontSize: '9px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            color: '#83A0F4',
+                          }}>{i}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {errors.badSkills && touched.badSkills ? <ErrorLabel text={errors.badSkills.toString()} /> : null}
+
                   <textarea
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Description"
+                    onChange={handleChange}
+                    value={values.badDescription}
+                    name="badDescription"
+                    placeholder="Comment if you would like (max 50 words)"
                     style={{
-                      height: '15rem',
+                      marginTop: '1rem',
                       padding: '2rem',
+                      height: '5rem',
                       width: '95%',
                       backgroundColor: 'rgba(119, 195, 242, 0.1)',
                       border: 0,
@@ -91,145 +273,39 @@ function App() {
 
                   </textarea>
                 </div>
-              </div>
 
-              <div className="ask-item">
-                <p>4 - Please select 1 or 2 skills that he demonstrated and used for this experience ?</p>
+                <div className="ask-item">
+                  <p>6 - Are you willing to get reached-out by a recruiter regarding “Nicolas Fatout” on this specific achievement? {values.wouldReachAgain == true && 'Yes'} {values.wouldReachAgain == false && 'No'}</p>
+                  <div>
+                    <PassportButton onClick={() => setFieldValue('wouldReachAgain', true)} text="Yes" />
+                    <PassportButton onClick={() => setFieldValue("wouldReachAgain", false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                  </div>
 
-                <div style={{ display: 'flex' }}>
-                  {Array(10).fill(0).map((i, idx) => {
-                    return (
-                      <div
-                        key={`good-skill-${idx}`}
-                        onClick={() => {
-                          setGoodSkills((p) => {
-                            if (p[i]) {
-                              delete p[i]
-                            } else {
-                              p[i] = i
-                            }
-
-                            return p
-                          })
-                        }}
-                        style={{
-                          border: "1px solid #99879D",
-                          backdropFilter: 'blur(81.5485px)',
-                          borderRadius: '4px',
-                          marginRight: '1rem'
-                        }}>
-                        <p style={{
-                          paddingLeft: '0.5rem',
-                          paddingRight: '0.5rem',
-                          fontFamily: 'ABeeZee',
-                          fontSize: '9px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                          color: '#3DC35B',
-                        }}>OWNERSHIP</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-
-              <div className="ask-item">
-                <p>5 - Please select 1 skill “Nicolas Fatout” is currently working on or should continue improving according to you?</p>
-
-                <div style={{ display: 'flex' }}>
-                  {Array(10).fill(0).map((i, idx) => {
-                    return (
-                      <div
-                        key={`bad-skill-${idx}`}
-                        onClick={() => {
-                          setBadSkills((p) => {
-                            if (p[i]) {
-                              delete p[i]
-                            } else {
-                              p[i] = i
-                            }
-
-                            return p
-                          })
-                        }}
-                        style={{
-                          border: "1px solid #99879D",
-                          backdropFilter: 'blur(81.5485px)',
-                          borderRadius: '4px',
-                          marginRight: '1rem'
-                        }}>
-                        <p style={{
-                          paddingLeft: '0.5rem',
-                          paddingRight: '0.5rem',
-                          fontFamily: 'ABeeZee',
-                          fontSize: '9px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                          color: '#83A0F4',
-                        }}>OWNERSHIP</p>
-                      </div>
-                    );
-                  })}
+                  {errors.validated && touched.validated ? <ErrorLabel text={errors.validated} /> : null}
                 </div>
 
-                <textarea
-                  onChange={(e) => {
-                    setBadDescription(e.target.value)
-                  }}
-                  placeholder="Comment if you would like (max 50 words)"
-                  style={{
-                    marginTop: '1rem',
-                    padding: '2rem',
-                    height: '5rem',
-                    width: '95%',
-                    backgroundColor: 'rgba(119, 195, 242, 0.1)',
-                    border: 0,
-                    borderRadius: '8px',
-                  }}>
-
-                </textarea>
-              </div>
-
-              <div className="ask-item">
-                <p>6 - Are you willing to get reached-out by a recruiter regarding “Nicolas Fatout” on this specific achievement? </p>
-                <div>
-                  <PassportButton onClick={() => setWouldReachAgain(true)} text="Yes" />
-                  <PassportButton onClick={() => setWouldReachAgain(false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                  <PassportButton
+                    style={{ width: "50%", backgroundColor: loading ? '#52c76c30': '#52c76c' }}
+                    onClick={handleSubmit} text="Done" />
                 </div>
+
+
               </div>
-
-              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <button style={{
-                  background: '#52C76C',
-                  borderRadius: '8px',
-                  border: 0,
-                  color: 'white',
-                  height: "3rem",
-                  width: "95%",
-                  fontSize: '1rem',
-                  fontFamily: 'RedHatRegular',
-                  boxShadow: '0px 2.76726px 2.21381px rgba(0, 0, 0, 0.00562291), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.00807786), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.01), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0119221), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0143771), 0px 100px 80px rgba(0, 0, 0, 0.02)',
-                }}>
-                  Done
-                </button>
-              </div>
-
-
             </div>
-          </div>
+          )}
 
-        </div>
+        </Formik>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"></script>
-      </body>
+
+      </div>
+
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"></script>
     </>
   );
 }

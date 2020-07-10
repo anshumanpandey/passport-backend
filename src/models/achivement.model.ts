@@ -23,9 +23,9 @@ interface AchivementAttributes {
 
 interface AchivementCreationAttributes extends Optional<AchivementAttributes, "id"> { }
 
-interface UserInstance extends Model<AchivementAttributes, AchivementCreationAttributes>, AchivementAttributes { }
+interface AchivementInstance extends Model<AchivementAttributes, AchivementCreationAttributes>, AchivementAttributes { }
 
-export const AchivementModel = sequelize.define<UserInstance>("Achivement", {
+export const AchivementModel = sequelize.define<AchivementInstance>("Achivement", {
   // Model attributes are defined here
   id: {
     primaryKey: true,

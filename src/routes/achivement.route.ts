@@ -8,6 +8,7 @@ import { AchivementModel } from '../models/achivement.model';
 import multer from 'multer';
 import { FeedbackModel } from '../models/feedback.model';
 import { sendEmail } from '../utils/Mail';
+import sequelize from '../utils/DB';
 
 let storage = multer.diskStorage({
   destination: 'uploads/',
@@ -152,10 +153,23 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
     trim: true
   },
 })),asyncHandler(async (req, res) => {
-  //@ts-ignore
-  await sendEmail(req.body.colleguePhonenumber);
-  //@ts-ignore
-  await AchivementModel.create({...req.body, awardFilename: req.file.filename,UserId: req.user.id});
+  await sequelize.transaction(async (t) => {
+    const a = await AchivementModel
+      //@ts-ignore
+      .create({...req.body, awardFilename: req.file.filename,UserId: req.user.id}, { transaction: t });
+
+    const editToken = Math.random().toString(36).substring(7);
+    //@ts-ignore
+    await FeedbackModel.create({ editToken, AchivementId: a.id }, { transaction: t });
+
+    await sendEmail({
+      email: req.body.colleguePhonenumber,
+      token: editToken,
+      name: req.body.collegueName,
+      title: req.body.collegueRole,
+    });
+  })
+    
   res.send({ success: 'Achivement created' });
 }));
 

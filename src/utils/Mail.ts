@@ -4,7 +4,7 @@ import { render } from "mustache"
 import { createTransport } from "nodemailer"
 
 // async..await is not allowed in global scope, must use a wrapper
-export async function sendEmail(email: string) {
+export async function sendEmail({ email, token, name, title }:{ email: string, token: string, name: string, title: string}) {
 
     // create reusable transporter object using the default SMTP transport
     let transporter = createTransport({
@@ -22,7 +22,7 @@ export async function sendEmail(email: string) {
         subject: "Please give us your feedback", // Subject line
         html: render(
             readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), 
-            { encoding: 'utf8' }), { public_url: process.env.PUBLIC_URL }
+            { encoding: 'utf8' }), { public_url: process.env.PUBLIC_URL, form_url: `${process.env.API_URL}/feedback/form?token=${token}&name=${name}&title=${title}` }
         ),
     });
 

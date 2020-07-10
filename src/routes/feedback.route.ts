@@ -5,16 +5,23 @@ import { join } from "path"
 import { checkSchema } from "express-validator"
 import { validateParams } from '../middlewares/routeValidation.middleware';
 import { FeedbackModel } from '../models/feedback.model';
+import { ApiError } from '../utils/ApiError';
 
 export const feedbackRoutes = express();
 
-feedbackRoutes.get('/feedback/form/:achivementId', (req, res) => {
+feedbackRoutes.get('/feedback/form/', asyncHandler(async (req, res) => {
+  const { token } = req.query
+  if (!token) throw new ApiError("Missing token")
+  
+  const feedback = await FeedbackModel.findOne({ where: { editToken: token }})
+  if (!feedback) throw new ApiError("Feedback not found")
+
   res.sendFile(join(__dirname, "..", "..", "feedback-form", "build","index.html"));
-})
+}))
 
 
-feedbackRoutes.post('/feedback/:achivementId', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),validateParams(checkSchema({
-  achivementId: {
+feedbackRoutes.post('/feedback/:token', validateParams(checkSchema({
+  token: {
     in: ['params'],
     exists: {
       errorMessage: 'Missing field'
@@ -42,6 +49,13 @@ feedbackRoutes.post('/feedback/:achivementId', jwt({ secret: process.env.JWT_SEC
     },
     trim: true
   },
+  engagementDescription: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    trim: true
+  },
   skillsWithExperience: {
     in: ['body'],
     trim: true
@@ -51,6 +65,12 @@ feedbackRoutes.post('/feedback/:achivementId', jwt({ secret: process.env.JWT_SEC
     trim: true
   },
 })), asyncHandler(async (req, res) => {
-  await FeedbackModel.create({ ...req.body, AchivementId: req.params.achivementId });
+  const { token } = req.params
+  if (!token) throw new ApiError("Missing token")
+  
+  const feedback = await FeedbackModel.findOne({ where: { editToken: token }})
+  if (!feedback) throw new ApiError("Feedback not found")
+
+  await FeedbackModel.update({ ...req.body }, { where: { editToken: token }});
   res.send({ success: 'Feedback created' });
 }));

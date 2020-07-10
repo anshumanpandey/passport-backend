@@ -6,8 +6,10 @@ import { AchivementModel } from "./achivement.model";
 export interface FeedbackAttributes {
   id: string,
   fullname: string
+  editToken: string
   validated: string
   description: string
+  wouldReachAgain: boolean
   engagementDescription: string
   skillsWithExperience: string
   skillsWithImproving: string
@@ -24,25 +26,33 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
   },
-  fullname: {
+  editToken: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  fullname: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   validated: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   engagementDescription: {
     type: DataTypes.STRING,
     allowNull: true
   },
+  wouldReachAgain: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
   skillsWithExperience: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     get () {
       const rawValue = this.getDataValue('skillsWithExperience');
       return rawValue? rawValue.split(',') : [];
@@ -57,7 +67,7 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
   },
   skillsWithImproving: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     get () {
       const rawValue = this.getDataValue('skillsWithImproving');
       return rawValue? rawValue.split(',') : [];
