@@ -46,7 +46,7 @@ userRoutes.post('/login', validateParams(checkSchema({
   const jsonData = user.toJSON();
   //@ts-ignore
   delete jsonData.password;
-  var token = sign(jsonData, process.env.JWT_SECRET || 'aa');
+  var token = sign(jsonData, process.env.JWT_SECRET || 'aa', { expiresIn: '9999 years'});
   res.send({ ...jsonData, token });
 }));
 

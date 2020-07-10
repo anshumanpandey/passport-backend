@@ -152,7 +152,6 @@ achivementRoutes.post('/achivement', upload.single("awardFile"),validateParams(c
   },
 })),asyncHandler(async (req, res) => {
   //@ts-ignore
-  console.log(req.file)
   await sendEmail(req.body.colleguePhonenumber);
   //@ts-ignore
   await AchivementModel.create({...req.body, awardFilename: req.file.filename,UserId: req.user.id});
