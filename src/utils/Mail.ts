@@ -1,5 +1,6 @@
 import { readFileSync } from "fs"
 import { join } from "path"
+import { render } from "mustache"
 import { createTransport } from "nodemailer"
 
 // async..await is not allowed in global scope, must use a wrapper
@@ -19,12 +20,10 @@ export async function sendEmail(email: string) {
         from: 'thelox95@gmail.com', // sender address
         to: email, // list of receivers
         subject: "Please give us your feedback", // Subject line
-        html: readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), { encoding: 'utf8' }),
-        attachments: [{
-            filename: "passportico.svg",
-            path: join(__dirname, '..', '..', 'templates', 'img', 'passportico.svg'),
-            cid: 'passportico' //same cid value as in the html img src
-        }]
+        html: render(
+            readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), 
+            { encoding: 'utf8' }), { public_url: process.env.PUBLIC_URL }
+        ),
     });
 
     console.log("Message sent: %s", info.messageId);

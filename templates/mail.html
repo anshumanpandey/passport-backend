@@ -10,26 +10,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
-    <style>
-        @font-face {
-            font-family: SarabunRegular;
-            src: url('./fonts/Sarabun-Regular.ttf');
-        }
-        @font-face {
-            font-family: ABeeZeeRegular;
-            src: url('./fonts/ABeeZee-Regular.ttf');
-        }
-        @font-face {
-            font-family: RedHatRegular;
-            src: url('./fonts/RedHatDisplay-Regular.ttf');
-        }
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        @media screen {
+            @font-face {
+                font-family: SarabunRegular;
+                src: url('{{public_url}}/fonts/Sarabun-Regular.ttf') format('truetype');
+            }
 
-        @font-face {
-            font-family: RedHatBold;
-            src: url('./fonts/RedHatDisplay-Bold.ttf');
-        }
+            @font-face {
+                font-family: 'ABeeZeeRegular';
+                src: url('{{public_url}}/fonts/ABeeZee-Regular.ttf') format('truetype');
+            }
 
+            @font-face {
+                font-family: RedHatRegular;
+                src: url('{{public_url}}/fonts/RedHatDisplay-Regular.ttf') format('truetype');
+            }
+
+            @font-face {
+                font-family: RedHatBold;
+                src: url('{{public_url}}/fonts/RedHatDisplay-Bold.ttf') format('truetype');
+            }
+        }
     </style>
 </head>
 
@@ -37,49 +41,58 @@
     <div class="container-fluid" style="height: 100vh; display: flex; flex-direction: column;">
         <div class="row header" style="background: linear-gradient(180deg, #9A9BF9 0%, #89A6FA 29.17%, #7DCBFB 100%);">
             <div class="col-12">
-                <h2 style="text-align: center; color: white;font-family: RedHatBold; text-shadow: 0px 2px 2px #FFFFFF; font-size: 48px;">Passport</h2>
-                <h5 style="text-align: center; color: white;font-family: RedHatBold;font-size: 24px;">Your career companion</h5>
+                <h2
+                    style="text-align: center; color: white;font-family: RedHatBold; text-shadow: 0px 2px 2px #FFFFFF; font-size: 48px;">
+                    Passport</h2>
+                <h5 style="text-align: center; color: white;font-family: RedHatBold;font-size: 24px;">Your career
+                    companion</h5>
             </div>
-            <img style="position: absolute;left: 25%;z-index: 2;" src="cid:passportico" alt="icon" />
+            <img style="position: absolute;left: 25%;z-index: 2;" src="{{public_url}}/img/passportico.svg" alt="icon" />
         </div>
 
         <div class="row middle" style="flex: 1;">
-            <div class="body col-10" style="width: 85%;margin-left: auto;margin-right: auto;background-color: salmon;flex: 1;background-color: #faf9fe;display: flex;flex-direction: column;">
-                <div class="body-text body-text-title" style="margin-left: 3%;color: #99879D;font-family: ABeeZeeRegular;font-size: 20px;color: #120E21;font-weight: 500;font-size: 20px;line-height: 26px;margin-top: 4%;margin-bottom: 4%;font-family: RedHatBold;">
+            <div class="body col-10"
+                style="width: 85%;margin-left: auto;margin-right: auto;background-color: salmon;flex: 1;background-color: #faf9fe;display: flex;flex-direction: column;">
+                <div class="body-text body-text-title"
+                    style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular';font-size: 20px;color: #120E21;font-weight: 500;font-size: 20px;line-height: 26px;margin-top: 4%;margin-bottom: 4%;font-family: RedHatBold;">
                     Hi Florian!
                 </div>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: ABeeZeeRegular">
+                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
                     Nicolas Fatout asked for your feedback on “Certified PMP Project Manager” achievement that occured
                     in “2020” at “Criteo”.
                 </p>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: ABeeZeeRegular">
+                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
                     It seems your opinion matters and has value to him. No resgistration or personnal information is
                     needed from you.
                 </p>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: ABeeZeeRegular">
+                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
                     Please take 2min to fill-out this short form:
                 </p>
-                <button style="background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: SarabunRegular;width: 20%;height: 10%;margin-left: auto;margin-right: auto;">
+                <button
+                    style="background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: 'SarabunRegular';width: 20%;height: 10%;margin-left: auto;margin-right: auto;">
                     Online Form Here
                 </button>
 
-                <p class="body-text body-text-detail" style="margin-left: 3%;color: #99879D;font-family: ABeeZeeRegular;font-size: 12px;margin-top: 10%;">
+                <p class="body-text body-text-detail"
+                    style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular';font-size: 12px;margin-top: 10%;">
                     If you are interested about Passport , you can download the mobile application here. Passport is
                     your free career companion like no other.
                 </p>
             </div>
         </div>
 
-        <div class="row footer" style="background-color: #faf9fe;border-top: 1px solid rgba(0, 0, 0, 0.22);padding-top: 1%;">
-            <div class="col-10" style="width: 85%;margin-left: auto;margin-right: auto;padding-right: 0;padding-left: 0;">
-                <p style="font-family: ABeeZeeRegular;color: #99879D;font-size: 12px;">
+        <div class="row footer"
+            style="background-color: #faf9fe;border-top: 1px solid rgba(0, 0, 0, 0.22);padding-top: 1%;">
+            <div class="col-10"
+                style="width: 85%;margin-left: auto;margin-right: auto;padding-right: 0;padding-left: 0;">
+                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
                     This automated message folows a request sent by nicolasfatoutfellus@gmail.com alias “Nicolas
                     Fatout”.
                 </p>
-                <p style="font-family: ABeeZeeRegular;color: #99879D;font-size: 12px;">
+                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
                     Passport Limited, France.
                 </p>
-                <p style="font-family: ABeeZeeRegular;color: #99879D;font-size: 12px;">
+                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
                     Legal Mentions
                 </p>
             </div>

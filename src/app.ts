@@ -1,4 +1,5 @@
 import express from 'express';
+import { join } from "path"
 import * as bodyParser from 'body-parser';
 import sequelize from './utils/DB';
 import { routes } from './routes';
@@ -20,8 +21,9 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 
-app.use(jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }).unless({path: ['/register', '/login']}));
-app.use(routes)
+app.use(express.static(join(__dirname, '../templates')));
+
+app.use('/api',jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }).unless({path: ['/api/register', '/api/login']}),routes)
 
 app.use((err:any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (err instanceof ApiError) {
