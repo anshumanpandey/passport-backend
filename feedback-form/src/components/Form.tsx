@@ -54,12 +54,12 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
     const formikRef = useRef<FormikProps<any>>()
 
     const [{ data, loading, error }, post] = useAxios({
-        url: `http://localhost:5000/api/feedback/${params.token}`,
+        url: `${process.env.REACT_APP_API_URL}/feedback/${params.token}`,
         method: 'POST'
     }, { manual: true })
 
     const [getDataReq] = useAxios({
-        url: `http://localhost:5000/api/feedback/meta/${params.token}`,
+        url: `${process.env.REACT_APP_API_URL}/feedback/meta/${params.token}`,
     })
 
     useEffect(() => {
