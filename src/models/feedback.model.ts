@@ -10,6 +10,7 @@ export interface FeedbackAttributes {
   validated: string
   description: string
   wouldReachAgain: boolean
+  isFilled: boolean
   engagementDescription: string
   skillsWithExperience: string
   skillsWithImproving: string
@@ -29,6 +30,11 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
   editToken: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  isFilled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   fullname: {
     type: DataTypes.STRING,

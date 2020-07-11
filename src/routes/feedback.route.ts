@@ -12,11 +12,18 @@ export const feedbackRoutes = express();
 feedbackRoutes.get('/feedback/form/', asyncHandler(async (req, res) => {
   const { token } = req.query
   if (!token) throw new ApiError("Missing token")
+
+  res.sendFile(join(__dirname, "..", "..", "feedback-form", "build","index.html"));
+}))
+
+feedbackRoutes.get('/feedback/meta/:token', asyncHandler(async (req, res) => {
+  const { token } = req.params
+  if (!token) throw new ApiError("Missing token")
   
   const feedback = await FeedbackModel.findOne({ where: { editToken: token }})
   if (!feedback) throw new ApiError("Feedback not found")
 
-  res.sendFile(join(__dirname, "..", "..", "feedback-form", "build","index.html"));
+  res.send(feedback)
 }))
 
 
@@ -68,9 +75,10 @@ feedbackRoutes.post('/feedback/:token', validateParams(checkSchema({
   const { token } = req.params
   if (!token) throw new ApiError("Missing token")
   
-  const feedback = await FeedbackModel.findOne({ where: { editToken: token }})
+  const feedback = await FeedbackModel.findOne({ where: { editToken: token, isFilled: false }})
   if (!feedback) throw new ApiError("Feedback not found")
+  if (feedback.isFilled) throw new ApiError("Feedback already done")
 
-  await FeedbackModel.update({ ...req.body }, { where: { editToken: token }});
+  await FeedbackModel.update({ ...req.body, isFilled: true }, { where: { editToken: token }});
   res.send({ success: 'Feedback created' });
 }));
