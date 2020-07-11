@@ -160,7 +160,7 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
 
     const editToken = Math.random().toString(36).substring(7);
     //@ts-ignore
-    await FeedbackModel.create({ editToken, AchivementId: a.id }, { transaction: t });
+    await FeedbackModel.create({ editToken, fullname: req.body.collegueName, AchivementId: a.id }, { transaction: t });
 
     await sendEmail({
       email: req.body.colleguePhonenumber,

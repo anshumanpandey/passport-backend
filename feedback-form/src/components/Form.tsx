@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { parse } from "query-string"
 import useAxios from 'axios-hooks'
 import { Formik, FormikProps } from 'formik';
+import MoonLoader from "react-spinners/MoonLoader";
 import { PassportButton } from './PassportButton';
 import { ErrorLabel } from './ErroLabel';
 
@@ -49,6 +50,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
     }
 
     const [changeName, setChangeName] = useState(false);
+    const [userName, setUsername] = useState('');
     const formikRef = useRef<FormikProps<any>>()
 
     const [{ data, loading, error }, post] = useAxios({
@@ -63,8 +65,19 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
     useEffect(() => {
         if (!getDataReq.data) return
         formikRef.current?.setFieldValue("name", getDataReq.data.fullname)
+        setUsername(`${getDataReq.data.Achivement.User.firstName} ${getDataReq.data.Achivement.User.lastName}`);
         if (getDataReq.data.isFilled) onSuccess()
     }, [getDataReq.loading]);
+
+    if (getDataReq.loading) {
+        return (
+            <div className="row middle">
+                <div style={{ display: 'flex', alignItems: 'center'}} className="body col-10">
+                    <MoonLoader />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <Formik
@@ -154,7 +167,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p>3 - In 50 words or less, could you describe how “Nicolas Fatout” achieved this performance? What were the obstacles? What was the impact?</p>
+                            <p>3 - In 50 words or less, could you describe how “{userName}” achieved this performance? What were the obstacles? What was the impact?</p>
 
                             <div>
                                 <textarea
@@ -227,7 +240,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
 
 
                         <div className="ask-item">
-                            <p>5 - Please select 1 skill “Nicolas Fatout” is currently working on or should continue improving according to you?</p>
+                            <p>5 - Please select 1 skill “{userName}” is currently working on or should continue improving according to you?</p>
 
                             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                                 {Skils.map((i, idx) => {
@@ -292,7 +305,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p>6 - Are you willing to get reached-out by a recruiter regarding “Nicolas Fatout” on this specific achievement? {values.wouldReachAgain == true && 'Yes'} {values.wouldReachAgain == false && 'No'}</p>
+                            <p>6 - Are you willing to get reached-out by a recruiter regarding “{userName}” on this specific achievement? {values.wouldReachAgain == true && 'Yes'} {values.wouldReachAgain == false && 'No'}</p>
                             <div>
                                 <PassportButton onClick={() => setFieldValue('wouldReachAgain', true)} text="Yes" />
                                 <PassportButton onClick={() => setFieldValue("wouldReachAgain", false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />

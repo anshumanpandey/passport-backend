@@ -6,6 +6,8 @@ import { checkSchema } from "express-validator"
 import { validateParams } from '../middlewares/routeValidation.middleware';
 import { FeedbackModel } from '../models/feedback.model';
 import { ApiError } from '../utils/ApiError';
+import { AchivementModel } from '../models/achivement.model';
+import { UserModel } from '../models/user.model';
 
 export const feedbackRoutes = express();
 
@@ -13,17 +15,21 @@ feedbackRoutes.get('/feedback/form/', asyncHandler(async (req, res) => {
   const { token } = req.query
   if (!token) throw new ApiError("Missing token")
 
-  res.sendFile(join(__dirname, "..", "..", "feedback-form", "build","index.html"));
+  res.sendFile(join(__dirname, "..", "..", "feedback-form", "build", "index.html"));
 }))
 
 feedbackRoutes.get('/feedback/meta/:token', asyncHandler(async (req, res) => {
   const { token } = req.params
   if (!token) throw new ApiError("Missing token")
-  
-  const feedback = await FeedbackModel.findOne({ where: { editToken: token }})
+
+  const feedback = await FeedbackModel.findOne({
+    where: { editToken: token },
+    include: [{
+      model: AchivementModel, attributes: ["title"], include: [{ model: UserModel, attributes: ["firstName", 'lastName'] }]}]
+  })
   if (!feedback) throw new ApiError("Feedback not found")
 
-  res.send(feedback)
+res.send(feedback)
 }))
 
 
@@ -74,11 +80,11 @@ feedbackRoutes.post('/feedback/:token', validateParams(checkSchema({
 })), asyncHandler(async (req, res) => {
   const { token } = req.params
   if (!token) throw new ApiError("Missing token")
-  
-  const feedback = await FeedbackModel.findOne({ where: { editToken: token, isFilled: false }})
+
+  const feedback = await FeedbackModel.findOne({ where: { editToken: token, isFilled: false } })
   if (!feedback) throw new ApiError("Feedback not found")
   if (feedback.isFilled) throw new ApiError("Feedback already done")
 
-  await FeedbackModel.update({ ...req.body, isFilled: true }, { where: { editToken: token }});
+  await FeedbackModel.update({ ...req.body, isFilled: true }, { where: { editToken: token } });
   res.send({ success: 'Feedback created' });
 }));
