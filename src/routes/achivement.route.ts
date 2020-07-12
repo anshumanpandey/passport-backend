@@ -175,6 +175,6 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
 
 achivementRoutes.get('/achivement/', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),asyncHandler(async (req, res) => {
   //@ts-ignore
-  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel }] })
+  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel, where: { isFilled: true } }] })
   res.send(achivements);
 }));
