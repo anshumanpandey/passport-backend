@@ -22,7 +22,10 @@ export async function sendEmail({ email, token, name, title }:{ email: string, t
         subject: "Please give us your feedback", // Subject line
         html: render(
             readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), 
-            { encoding: 'utf8' }), { public_url: process.env.PUBLIC_URL, form_url: `${process.env.API_URL}/feedback/form?token=${token}&name=${name}&title=${title}` }
+            { encoding: 'utf8' }), {
+                public_url: process.env.PUBLIC_URL,
+                form_url: `${process.env.API_URL}/feedback/form?token=${token}&name=${name}&title=${title}`
+            }
         ),
     });
 

@@ -1,114 +1,187 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A responsive two column example</title>
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Red+Hat+Display:wght@400;700&family=Sarabun&display=swap" rel="stylesheet"> 
+    <style>
+        /* A simple css reset */
+        body,
+        table,
+        thead,
+        tbody,
+        tr,
+        td,
+        img {
+            padding: 0;
+            margin: 0;
+            border: none;
+            border-spacing: 0px;
+            border-collapse: collapse;
+            vertical-align: top;
+        }
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        /* Add some padding for small screens */
+        /*.wrapper {
+            padding-left: 10px;
+            padding-right: 10px;
+        }*/
 
-    <title></title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        @media screen {
-            @font-face {
-                font-family: SarabunRegular;
-                src: url('{{public_url}}/fonts/Sarabun-Regular.ttf') format('truetype');
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 20px;
+            line-height: 1.6;
+            font-family: 'Red Hat Display', sans-serif;
+        }
+
+        p,
+        a,
+        li {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .header {
+            background: linear-gradient(180deg, #9A9BF9 0%, #89A6FA 29.17%, #7DCBFB 100%);
+            width: 100%;
+        }
+
+        .footer{
+            width: 100%;
+        }
+
+        .text {
+            color: #99879D;
+            text-align: left ;
+        }
+
+        .btn{
+            width: 20%;
+        }
+
+        @media only screen and (max-width: 620px) {
+
+            .wrapper .section {
+                width: 100%;
             }
 
-            @font-face {
-                font-family: 'ABeeZeeRegular';
-                src: url('{{public_url}}/fonts/ABeeZee-Regular.ttf') format('truetype');
+            .wrapper .column {
+                width: 100%;
+                display: block;
             }
 
-            @font-face {
-                font-family: RedHatRegular;
-                src: url('{{public_url}}/fonts/RedHatDisplay-Regular.ttf') format('truetype');
-            }
-
-            @font-face {
-                font-family: RedHatBold;
-                src: url('{{public_url}}/fonts/RedHatDisplay-Bold.ttf') format('truetype');
+            .btn{
+                width: 60%;
             }
         }
     </style>
 </head>
 
-<body style="background-color: #E5E5E5">
-    <div class="container-fluid" style="height: 100vh; display: flex; flex-direction: column;">
-        <div class="row header" style="background: linear-gradient(180deg, #9A9BF9 0%, #89A6FA 29.17%, #7DCBFB 100%);">
-            <div class="col-12">
-                <h2
-                    style="text-align: center; color: white;font-family: RedHatBold; text-shadow: 0px 2px 2px #FFFFFF; font-size: 48px;">
-                    Passport</h2>
-                <h5 style="text-align: center; color: white;font-family: RedHatBold;font-size: 24px;">Your career
-                    companion</h5>
-            </div>
-            <img style="position: absolute;left: 25%;z-index: 2;" src="{{public_url}}/img/passportico.svg" alt="icon" />
-        </div>
-
-        <div class="row middle" style="flex: 1;">
-            <div class="body col-10"
-                style="width: 85%;margin-left: auto;margin-right: auto;background-color: salmon;flex: 1;background-color: #faf9fe;display: flex;flex-direction: column;">
-                <div class="body-text body-text-title"
-                    style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular';font-size: 20px;color: #120E21;font-weight: 500;font-size: 20px;line-height: 26px;margin-top: 4%;margin-bottom: 4%;font-family: RedHatBold;">
-                    Hi Florian!
-                </div>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
-                    Nicolas Fatout asked for your feedback on “Certified PMP Project Manager” achievement that occured
-                    in “2020” at “Criteo”.
-                </p>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
-                    It seems your opinion matters and has value to him. No resgistration or personnal information is
-                    needed from you.
-                </p>
-                <p class="body-text" style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular'">
-                    Please take 2min to fill-out this short form:
-                </p>
-                <a href="{{form_url}}" target="_blank" style="display: flex;justify-content: center;align-items: center;;background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: 'SarabunRegular';width: 20%;height: 10%;margin-left: auto;margin-right: auto;">
-                    Online Form Here
-                </a>
-
-                <p class="body-text body-text-detail"
-                    style="margin-left: 3%;color: #99879D;font-family: 'ABeeZeeRegular';font-size: 12px;margin-top: 10%;">
-                    If you are interested about Passport , you can download the mobile application here. Passport is
-                    your free career companion like no other.
-                </p>
-            </div>
-        </div>
-
-        <div class="row footer"
-            style="background-color: #faf9fe;border-top: 1px solid rgba(0, 0, 0, 0.22);padding-top: 1%;">
-            <div class="col-10"
-                style="width: 85%;margin-left: auto;margin-right: auto;padding-right: 0;padding-left: 0;">
-                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
-                    This automated message folows a request sent by nicolasfatoutfellus@gmail.com alias “Nicolas
-                    Fatout”.
-                </p>
-                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
-                    Passport Limited, France.
-                </p>
-                <p style="font-family: 'ABeeZeeRegular';color: #99879D;font-size: 12px;">
-                    Legal Mentions
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+<body>
+    <table width="100%" style="background-color: #f3f3f3;">
+        <tbody>
+            <tr>
+                <td class="wrapper" width="600" align="center">
+                    <!-- Header image -->
+                    <table class="section header" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="column">
+                                <table style="margin-left: auto;margin-right: auto;">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <p style="font-weight: bold;text-align:justify;font-size: 48px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
+                                                    PASSPORT
+                                                </p>
+                                                <p style="font-weight: bold;text-align:justify;font-size: 24px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
+                                                    Your career companion
+                                                </p>
+                                                <img src="{{public_url}}/img/passportico.svg" alt="passport">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Two columns -->
+                    <table class="section" cellpadding="0" cellspacing="0" style="background-color: #faf9fe">
+                        <tr>
+                            <td class="column" width="85%" valign="top">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td align="left" style="padding: 5%;">
+                                                <p style="font-size: 20px;font-weight: 500;">Hi Florian!</p>
+                                                <p class="text" style="text-align:justify;">
+                                                    Nicolas Fatout asked for your feedback on “Certified PMP Project
+                                                    Manager” achievement that occured in “2020” at “Criteo”.
+                                                </p>
+                                                <p class="text">
+                                                    It seems your opinion matters and has value to him. No resgistration
+                                                    or personnal information is needed from you.
+                                                </p>
+                                                <p class="text">
+                                                    Please take 2min to fill-out this short form:
+                                                </p>
+                                                <a href="{{form_url}}" target="_blank"
+                                                    id="btn"
+                                                    style="text-decoration: none;padding: 1rem 3rem;display: flex;justify-content: center;align-items: center;background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: 'Sarabun';height: 10%;margin-left: auto;margin-right: auto;">
+                                                    Online Form Here
+                                                </a>
+                                                <p class="text" style="font-size: 12px; margin-top: 25%;">
+                                                    If you are interested about Passport , you can download the mobile
+                                                    application here. Passport is your free career companion like no
+                                                    other.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Footer -->
+                    <table class="section footer" cellpadding="0" cellspacing="0" style="border-top: 1px solid rgba(0, 0, 0, 0.22)">
+                        <tr>
+                            <td class="column">
+                                <table style="margin-left: auto;margin-right: auto;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 49%;padding-left: 5%;">
+                                                <p class="text" style="font-size: 12px;">
+                                                    This automated message folows a request sent by nicolasfatoutfellus@gmail.com alias “Nicolas Fatout”. 
+                                                </p>
+                                                <p class="text" style="font-size: 12px;">
+                                                    Passport Limited, France.
+                                                </p>
+                                                <p class="text" style="font-size: 12px;">
+                                                    Legal Mentions. 
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
