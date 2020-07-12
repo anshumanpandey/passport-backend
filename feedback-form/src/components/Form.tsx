@@ -5,6 +5,7 @@ import { Formik, FormikProps } from 'formik';
 import MoonLoader from "react-spinners/MoonLoader";
 import { PassportButton } from './PassportButton';
 import { ErrorLabel } from './ErroLabel';
+import { useMediaQuery } from 'react-responsive'
 
 const Skils = [
     "Web Dev",
@@ -38,6 +39,7 @@ type Props = { onSuccess: () => void }
 
 export const Form: React.FC<Props> = ({ onSuccess }) => {
     const params = parse(window.location.search)
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
     const fValues: FormValues = {
         name: "",
@@ -72,7 +74,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
     if (getDataReq.loading) {
         return (
             <div className="row middle">
-                <div style={{ display: 'flex', alignItems: 'center'}} className="body col-10">
+                <div style={{ display: 'flex', alignItems: 'center' }} className="body col-10">
                     <MoonLoader />
                 </div>
             </div>
@@ -87,7 +89,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
             validate={values => {
                 const errors: any = {}
                 if (values.validated == null) errors.validated = "You must select an option"
-                if (values.wouldReachAgain == null) errors.validated = "You must select an option"
+                if (values.wouldReachAgain == null) errors.wouldReachAgain = "You must select an option"
                 if (!values.description) errors.description = "Required field"
 
                 const splittedValues = values.name ? values.name.split(',') : []
@@ -128,13 +130,16 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
             {({ handleSubmit, handleChange, values, setFieldValue, errors, touched }) => (
 
                 <div className="row middle">
-                    <div className="body col-10">
+                    <div style={{ width: isTabletOrMobile ? "unset" : "85%"}} className="body col-10">
 
                         <div className="ask-item">
-                            <p>1 - Are you {values.name} etc ? {!changeName ? 'Yes' : 'No'} </p>
-                            <div>
-                                <PassportButton onClick={() => setChangeName(false)} text="Yes" />
-                                <PassportButton onClick={() => setChangeName(true)} text="No, modify" type="Normal" style={{ marginLeft: '1rem', }} />
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>1 - Are you {values.name} etc ? {!changeName ? 'Yes' : 'No'} </p>
+                            <div style={{ display: 'flex', flexDirection: 'column'}}>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
+                                    <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setChangeName(false)} text="Yes" />
+                                    <PassportButton onClick={() => setChangeName(true)} text="No, modify" type="Normal" />
+                                </div>
+
                                 {changeName && (
                                     <textarea
                                         onChange={handleChange}
@@ -145,7 +150,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                             marginTop: '1rem',
                                             padding: '2rem',
                                             height: '1rem',
-                                            width: '95%',
+                                            flex: 1,
                                             backgroundColor: 'rgba(119, 195, 242, 0.1)',
                                             border: 0,
                                             borderRadius: '8px',
@@ -158,18 +163,18 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p>2 - Do you validate the achievement ? {values.validated == true && 'Yes'} {values.validated == false && 'No'}</p>
-                            <div>
-                                <PassportButton onClick={() => setFieldValue("validated", true)} text="Yes" />
-                                <PassportButton onClick={() => setFieldValue("validated", false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>2 - Do you validate the achievement ? {values.validated == true && 'Yes'} {values.validated == false && 'No'}</p>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
+                                <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setFieldValue("validated", true)} text="Yes" />
+                                <PassportButton onClick={() => setFieldValue("validated", false)} text="No" type="Normal" />
                             </div>
                             {errors.validated && touched.validated ? <ErrorLabel text={errors.validated} /> : null}
                         </div>
 
                         <div className="ask-item">
-                            <p>3 - In 50 words or less, could you describe how “{userName}” achieved this performance? What were the obstacles? What was the impact?</p>
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>3 - In 50 words or less, could you describe how “{userName}” achieved this performance? What were the obstacles? What was the impact?</p>
 
-                            <div>
+                            <div style={{ display: 'flex' }}>
                                 <textarea
                                     onChange={handleChange}
                                     value={values.description}
@@ -178,7 +183,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                     style={{
                                         height: '15rem',
                                         padding: '2rem',
-                                        width: '95%',
+                                        flex: 1,
                                         backgroundColor: 'rgba(119, 195, 242, 0.1)',
                                         border: 0,
                                         borderRadius: '8px',
@@ -190,9 +195,9 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p>4 - Please select 1 or 2 skills that he demonstrated and used for this experience ?</p>
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>4 - Please select 1 or 2 skills that he demonstrated and used for this experience ?</p>
 
-                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'space-around' : 'normal' }}>
                                 {Skils.map((i, idx) => {
                                     return (
                                         <div
@@ -239,10 +244,10 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
 
-                        <div className="ask-item">
-                            <p>5 - Please select 1 skill “{userName}” is currently working on or should continue improving according to you?</p>
+                        <div style={{ display: 'flex', flexDirection: 'column'}} className="ask-item">
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>5 - Please select 1 skill “{userName}” is currently working on or should continue improving according to you?</p>
 
-                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'space-around' : 'normal' }}>
                                 {Skils.map((i, idx) => {
                                     return (
                                         <div
@@ -295,7 +300,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                     marginTop: '1rem',
                                     padding: '2rem',
                                     height: '5rem',
-                                    width: '95%',
+                                    flex: 1,
                                     backgroundColor: 'rgba(119, 195, 242, 0.1)',
                                     border: 0,
                                     borderRadius: '8px',
@@ -305,13 +310,12 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p>6 - Are you willing to get reached-out by a recruiter regarding “{userName}” on this specific achievement? {values.wouldReachAgain == true && 'Yes'} {values.wouldReachAgain == false && 'No'}</p>
-                            <div>
-                                <PassportButton onClick={() => setFieldValue('wouldReachAgain', true)} text="Yes" />
-                                <PassportButton onClick={() => setFieldValue("wouldReachAgain", false)} text="No" type="Normal" style={{ marginLeft: '1rem', }} />
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>6 - Are you willing to get reached-out by a recruiter regarding “{userName}” on this specific achievement? {values.wouldReachAgain == true && 'Yes'} {values.wouldReachAgain == false && 'No'}</p>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
+                                <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setFieldValue('wouldReachAgain', true)} text="Yes" />
+                                <PassportButton onClick={() => setFieldValue("wouldReachAgain", false)} text="No" type="Normal" />
                             </div>
-
-                            {errors.validated && touched.validated ? <ErrorLabel text={errors.validated} /> : null}
+                            {errors.wouldReachAgain && touched.wouldReachAgain ? <ErrorLabel text={errors.wouldReachAgain} /> : null}
                         </div>
 
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
