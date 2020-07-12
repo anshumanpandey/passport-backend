@@ -125,7 +125,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img style="float: left;width: 30%;" src="https://passport-backend.herokuapp.com/img/passportico.svg" alt="passport">
+                                                <img style="float: left;width: 30%;" src="{{public_url}}img/passportico.svg" alt="passport">
                                                 <div class="header-text-wrapper" style="float: left;">
                                                     <p style="text-align: center;font-weight: bold;text-align:justify;font-size: 48px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
                                                         PASSPORT
@@ -151,8 +151,7 @@
                                             <td align="left" style="padding: 5%;">
                                                 <p style="font-size: 20px;font-weight: 500;">Hi Florian!</p>
                                                 <p class="text" style="text-align:justify;">
-                                                    Nicolas Fatout asked for your feedback on “Certified PMP Project
-                                                    Manager” achievement that occured in “2020” at “Criteo”.
+                                                    {{user.firstName}} {{user.lastName}} asked for your feedback on “{{achivement.title}}” achievement that occured in “{{achivement.year}}” at “{{achivement.company}}”.
                                                 </p>
                                                 <p class="text">
                                                     It seems your opinion matters and has value to him. No resgistration
@@ -187,7 +186,7 @@
                                         <tr>
                                             <td style="width: 49%;padding-left: 5%;">
                                                 <p class="text" style="font-size: 12px;">
-                                                    This automated message folows a request sent by nicolasfatoutfellus@gmail.com alias “Nicolas Fatout”. 
+                                                    This automated message follows a request sent by {{user.email}} alias “{{user.firstName}} {{user.lastName}}”. 
                                                 </p>
                                                 <p class="text" style="font-size: 12px;">
                                                     Passport Limited, France.

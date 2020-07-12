@@ -167,6 +167,9 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
       token: editToken,
       name: req.body.collegueName,
       title: req.body.collegueRole,
+      //@ts-ignore
+      user: req.user,
+      achivement: a
     });
   })
     
