@@ -23,7 +23,7 @@ export async function sendEmail({ email, token, name, title, user, achivement }:
         html: render(
             readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), 
             { encoding: 'utf8' }), {
-                public_url: process.env.PUBLIC_URL,
+                assets_url: process.env.ASSETS_URL,
                 form_url: `${process.env.API_URL}/feedback/form?token=${token}&name=${name}&title=${title}`,
                 user,
                 achivement
