@@ -159,7 +159,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                     </textarea>
                                 )}
                             </div>
-                            {errors.name && touched.name ? <ErrorLabel text={errors.name} /> : null}
+                            {errors.name && touched.name ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.name} /> : null}
                         </div>
 
                         <div className="ask-item">
@@ -168,7 +168,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                 <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setFieldValue("validated", true)} text="Yes" />
                                 <PassportButton onClick={() => setFieldValue("validated", false)} text="No" type="Normal" />
                             </div>
-                            {errors.validated && touched.validated ? <ErrorLabel text={errors.validated} /> : null}
+                            {errors.validated && touched.validated ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.validated} /> : null}
                         </div>
 
                         <div className="ask-item">
@@ -191,7 +191,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
 
                                 </textarea>
                             </div>
-                            {errors.description && touched.description ? <ErrorLabel text={errors.description} /> : null}
+                            {errors.description && touched.description ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.description} /> : null}
                         </div>
 
                         <div className="ask-item">
@@ -240,7 +240,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                 })}
                             </div>
 
-                            {errors.goodSkills && touched.goodSkills ? <ErrorLabel text={errors.goodSkills.toString()} /> : null}
+                            {errors.goodSkills && touched.goodSkills ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.goodSkills.toString()} /> : null}
                         </div>
 
 
@@ -289,7 +289,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                     );
                                 })}
                             </div>
-                            {errors.badSkills && touched.badSkills ? <ErrorLabel text={errors.badSkills.toString()} /> : null}
+                            {errors.badSkills && touched.badSkills ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.badSkills.toString()} /> : null}
 
                             <textarea
                                 onChange={handleChange}
@@ -315,7 +315,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                 <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setFieldValue('wouldReachAgain', true)} text="Yes" />
                                 <PassportButton onClick={() => setFieldValue("wouldReachAgain", false)} text="No" type="Normal" />
                             </div>
-                            {errors.wouldReachAgain && touched.wouldReachAgain ? <ErrorLabel text={errors.wouldReachAgain} /> : null}
+                            {errors.wouldReachAgain && touched.wouldReachAgain ? <ErrorLabel style={{ textAlign: isTabletOrMobile ? 'center' : 'left' }} text={errors.wouldReachAgain} /> : null}
                         </div>
 
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

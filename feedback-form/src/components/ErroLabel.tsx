@@ -6,6 +6,6 @@ type Props = {
 }
 export const ErrorLabel: React.FC<Props> = ({ text, style }) => {
     return (
-        <p style={{ color: 'rgba(212, 62, 32, 0.5)'}}>{text}</p>
+        <p style={{ color: 'rgba(212, 62, 32, 0.5)', ...style}}>{text}</p>
     );
 }

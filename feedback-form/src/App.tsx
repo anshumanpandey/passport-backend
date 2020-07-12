@@ -3,19 +3,21 @@ import passportico from './img/passportico.svg';
 import './App.css';
 import { SuccessMessage } from './components/SuccessMessage';
 import { Form } from './components/Form';
+import { useMediaQuery } from 'react-responsive';
 
 function App() {
   const [successSend, setsuccessSend] = useState(false);
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   return (
     <>
       <div className="container-fluid">
         <div className="row header">
           <div className="col-12">
-            <h2>Passport</h2>
-            <h5>Your career companion</h5>
+            <h2 style={{ position: 'relative',zIndex: 3 }}>Passport</h2>
+            <h5 style={{ position: 'relative',zIndex: 3 }}>Your career companion</h5>
           </div>
-          <img src={passportico} alt="icon" />
+          <img style={{ left: isTabletOrMobile ? '5%' : '25%'}} src={passportico} alt="icon" />
         </div>
 
         {successSend && <SuccessMessage />}
