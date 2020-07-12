@@ -59,6 +59,10 @@
             width: 100%;
         }
 
+        .header img{
+            left: -60%;
+        }
+
         .footer{
             width: 100%;
         }
@@ -86,6 +90,10 @@
             .btn{
                 width: 60%;
             }
+
+            .header img{
+                left: -20%;
+            }
         }
     </style>
 </head>
@@ -102,14 +110,14 @@
                                 <table style="margin-left: auto;margin-right: auto;">
                                     <tbody>
                                         <tr>
-                                            <td align="center">
-                                                <p style="font-weight: bold;text-align:justify;font-size: 48px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
+                                            <td style="position: relative;" align="center">
+                                                <img style="width: 50%;position: absolute;" src="https://passport-backend.herokuapp.com/img/passportico.svg" alt="passport">
+                                                <p style="text-align: center;position: relative;z-index: 2;font-weight: bold;text-align:justify;font-size: 48px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
                                                     PASSPORT
                                                 </p>
-                                                <p style="font-weight: bold;text-align:justify;font-size: 24px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
+                                                <p style="text-align: center;position: relative;z-index: 2;font-weight: bold;text-align:justify;font-size: 24px;margin: 0;padding: 0; color: white;text-shadow: 0px 2px 2px #FFFFFF;">
                                                     Your career companion
                                                 </p>
-                                                <img src="{{public_url}}/img/passportico.svg" alt="passport">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -139,7 +147,7 @@
                                                 </p>
                                                 <a href="{{form_url}}" target="_blank"
                                                     id="btn"
-                                                    style="text-decoration: none;padding: 1rem 3rem;display: flex;justify-content: center;align-items: center;background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: 'Sarabun';height: 10%;margin-left: auto;margin-right: auto;">
+                                                    style="text-align: center;text-decoration: none;padding: 1rem 3rem;display: flex;justify-content: center;align-items: center;background-color: #8BA5FA;box-shadow: 0px 8px 20px rgba(97, 62, 234, 0.32);border-radius: 6px;border: 0;color: #FFFFFF;font-family: 'Sarabun';height: 10%;margin-left: auto;margin-right: auto;">
                                                     Online Form Here
                                                 </a>
                                                 <p class="text" style="font-size: 12px; margin-top: 25%;">
