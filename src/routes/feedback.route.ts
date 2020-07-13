@@ -35,7 +35,7 @@ feedbackRoutes.get('/feedback/meta/:token', asyncHandler(async (req, res) => {
   res.send(feedback)
 }))
 
-feedbackRoutes.post('/feedback/ask', validateParams(checkSchema({
+feedbackRoutes.post('/feedback/ask', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),validateParams(checkSchema({
   achivementId: {
     in: ['body'],
     exists: {
@@ -86,7 +86,7 @@ feedbackRoutes.post('/feedback/ask', validateParams(checkSchema({
     const editToken = Math.random().toString(36).substring(7);
 
     //@ts-ignore
-    await FeedbackModel.create({ ...req.body, editToken,AchivementId: achivement.id });
+    const feedback = await FeedbackModel.create({ ...req.body, editToken,AchivementId: achivement.id });
 
     await sendEmail({
       email: req.body.colleguePhonenumber,
@@ -95,7 +95,8 @@ feedbackRoutes.post('/feedback/ask', validateParams(checkSchema({
       title: req.body.collegueRole,
       //@ts-ignore
       user: req.user,
-      achivement
+      achivement,
+      feedback
     });
   })
 
