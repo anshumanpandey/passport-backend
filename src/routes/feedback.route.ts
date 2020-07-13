@@ -8,6 +8,8 @@ import { FeedbackModel } from '../models/feedback.model';
 import { ApiError } from '../utils/ApiError';
 import { AchivementModel } from '../models/achivement.model';
 import { UserModel } from '../models/user.model';
+import sequelize from '../utils/DB';
+import { sendEmail } from '../utils/Mail';
 
 export const feedbackRoutes = express();
 
@@ -25,12 +27,80 @@ feedbackRoutes.get('/feedback/meta/:token', asyncHandler(async (req, res) => {
   const feedback = await FeedbackModel.findOne({
     where: { editToken: token },
     include: [{
-      model: AchivementModel, attributes: ["title"], include: [{ model: UserModel, attributes: ["firstName", 'lastName'] }]}]
+      model: AchivementModel, attributes: ["title"], include: [{ model: UserModel, attributes: ["firstName", 'lastName'] }]
+    }]
   })
   if (!feedback) throw new ApiError("Feedback not found")
 
-res.send(feedback)
+  res.send(feedback)
 }))
+
+feedbackRoutes.post('/feedback/ask', validateParams(checkSchema({
+  achivementId: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    trim: true
+  },
+  collegueName: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  colleguePhonenumber: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+  collegueRole: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  },
+})), asyncHandler(async (req, res) => {
+  const { achivementId } = req.body
+
+  await sequelize.transaction(async (t) => {
+    const achivement = await AchivementModel.findByPk(achivementId)
+    if (!achivement) throw new ApiError("Achivement not found")
+
+    const editToken = Math.random().toString(36).substring(7);
+
+    //@ts-ignore
+    await FeedbackModel.create({ ...req.body, editToken,AchivementId: achivement.id });
+
+    await sendEmail({
+      email: req.body.colleguePhonenumber,
+      token: editToken,
+      name: req.body.collegueName,
+      title: req.body.collegueRole,
+      //@ts-ignore
+      user: req.user,
+      achivement
+    });
+  })
+
+  res.send({ success: 'Feedback created' });
+}));
 
 
 feedbackRoutes.post('/feedback/:token', validateParams(checkSchema({

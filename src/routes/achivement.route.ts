@@ -7,7 +7,6 @@ import { ApiError } from '../utils/ApiError';
 import { AchivementModel } from '../models/achivement.model';
 import multer from 'multer';
 import { FeedbackModel } from '../models/feedback.model';
-import { sendEmail } from '../utils/Mail';
 import sequelize from '../utils/DB';
 
 let storage = multer.diskStorage({
@@ -119,58 +118,12 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
       errorMessage: "Missing field"
     },
   },
-  collegueName: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
-    trim: true
-  },
-  colleguePhonenumber: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
-    trim: true
-  },
-  collegueRole: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
-    trim: true
-  },
 })),asyncHandler(async (req, res) => {
   await sequelize.transaction(async (t) => {
     const a = await AchivementModel
       //@ts-ignore
       .create({...req.body, awardFilename: req.file.filename,UserId: req.user.id}, { transaction: t });
 
-    const editToken = Math.random().toString(36).substring(7);
-    //@ts-ignore
-    await FeedbackModel.create({ editToken, fullname: req.body.collegueName, AchivementId: a.id }, { transaction: t });
-
-    await sendEmail({
-      email: req.body.colleguePhonenumber,
-      token: editToken,
-      name: req.body.collegueName,
-      title: req.body.collegueRole,
-      //@ts-ignore
-      user: req.user,
-      achivement: a
-    });
   })
     
   res.send({ success: 'Achivement created' });

@@ -5,13 +5,15 @@ import { AchivementModel } from "./achivement.model";
 
 export interface FeedbackAttributes {
   id: string,
-  fullname: string
   editToken: string
   validated: string
   description: string
   wouldReachAgain: boolean
   isFilled: boolean
   engagementDescription: string
+  collegueName: string
+  colleguePhonenumber: string
+  collegueRole: string
   skillsWithExperience: string
   skillsWithImproving: string
 }
@@ -36,10 +38,6 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
     allowNull: false,
     defaultValue: false
   },
-  fullname: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
   validated: {
     type: DataTypes.STRING,
     allowNull: true
@@ -55,6 +53,18 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
   wouldReachAgain: {
     type: DataTypes.BOOLEAN,
     allowNull: true
+  },
+  collegueName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  colleguePhonenumber: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  collegueRole: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   skillsWithExperience: {
     type: DataTypes.STRING,

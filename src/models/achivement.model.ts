@@ -15,9 +15,6 @@ interface AchivementAttributes {
   resultObteined: string
   valueObteined: string
   awardFilename: string
-  collegueName: string
-  colleguePhonenumber: string
-  collegueRole: string
   feedbacks?: FeedbackAttributes | FeedbackAttributes['id'];
 }
 
@@ -65,18 +62,6 @@ export const AchivementModel = sequelize.define<AchivementInstance>("Achivement"
     allowNull: false
   },
   awardFilename: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  collegueName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  colleguePhonenumber: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  collegueRole: {
     type: DataTypes.STRING,
     allowNull: false
   },
