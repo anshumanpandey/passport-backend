@@ -92,15 +92,8 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                 if (values.wouldReachAgain == null) errors.wouldReachAgain = "You must select an option"
                 if (!values.description) errors.description = "Required field"
 
-                const splittedValues = values.name ? values.name.split(',') : []
-                if (!values.name) {
+                if (!values.name && changeName == true) {
                     errors.name = "Required"
-                } else if (!values.name.includes(',')) {
-                    errors.name = "Invalid value. Specify like: NAME, POSITION"
-                } else if (splittedValues.length != 2) {
-                    errors.name = "Invalid value. Specify like: NAME, POSITION"
-                } else if (splittedValues[0].trim() == '' || splittedValues[1].trim() == "") {
-                    errors.name = "Invalid value. Specify like: NAME, POSITION"
                 }
 
                 if (Object.keys(values.goodSkills).length == 0) errors.goodSkills = "You must select at least one skill"
@@ -163,7 +156,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                         </div>
 
                         <div className="ask-item">
-                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>2 - Do you validate the achievement ? {values.validated == true && 'Yes'} {values.validated == false && 'No'}</p>
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>2 - Do you validate the achievement? {values.validated == true && 'Yes'} {values.validated == false && 'No'}</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
                                 <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setFieldValue("validated", true)} text="Yes" />
                                 <PassportButton onClick={() => setFieldValue("validated", false)} text="No" type="Normal" />
@@ -320,7 +313,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
 
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                             <PassportButton
-                                style={{ width: "50%", backgroundColor: loading ? '#52c76c30' : '#52c76c' }}
+                                style={{ width: isTabletOrMobile ? "80%":"50%", backgroundColor: loading ? '#52c76c30' : '#52c76c' }}
                                 onClick={handleSubmit} text="Done" />
                         </div>
 
