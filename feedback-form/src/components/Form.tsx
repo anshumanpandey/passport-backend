@@ -135,7 +135,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                                     <PassportButton onClick={() => setChangeName(true)} text="No, modify" type="Normal" />
                                 </div>
 
-                                {changeName == false && (
+                                {changeName == true && (
                                     <textarea
                                         onChange={handleChange}
                                         value={values.name}
