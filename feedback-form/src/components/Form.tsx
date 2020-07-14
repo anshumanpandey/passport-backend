@@ -128,7 +128,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                     <div style={{ width: isTabletOrMobile ? "unset" : "85%"}} className="body col-10">
 
                         <div className="ask-item">
-                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>1 - Are you {values.name} etc ? {changeName == true && 'Yes'} {changeName == false && 'Yes'} </p>
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>1 - Are you {values.name} etc ? {changeName == true && 'No'} {changeName == false && 'Yes'} </p>
                             <div style={{ display: 'flex', flexDirection: 'column'}}>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
                                     <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setChangeName(false)} text="Yes" />
