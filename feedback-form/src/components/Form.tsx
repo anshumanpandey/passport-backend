@@ -51,7 +51,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
         wouldReachAgain: null
     }
 
-    const [changeName, setChangeName] = useState(false);
+    const [changeName, setChangeName] = useState<boolean | null>(null);
     const [userName, setUsername] = useState('');
     const formikRef = useRef<FormikProps<any>>()
 
@@ -92,9 +92,11 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                 if (values.wouldReachAgain == null) errors.wouldReachAgain = "You must select an option"
                 if (!values.description) errors.description = "Required field"
 
-                if (!values.name && changeName == true) {
+                if (!values.name) {
                     errors.name = "Required"
                 }
+                if (changeName == null) errors.name = "You must select an option"
+
 
                 if (Object.keys(values.goodSkills).length == 0) errors.goodSkills = "You must select at least one skill"
                 if (Object.keys(values.badSkills).length == 0) errors.badSkills = "You must select at least one skill"
@@ -126,14 +128,14 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                     <div style={{ width: isTabletOrMobile ? "unset" : "85%"}} className="body col-10">
 
                         <div className="ask-item">
-                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>1 - Are you {values.name} etc ? {!changeName ? 'Yes' : 'No'} </p>
+                            <p style={{ textAlign: isTabletOrMobile ? 'center' : 'unset'}}>1 - Are you {values.name} etc ? {changeName == true && 'Yes'} {changeName == false && 'Yes'} </p>
                             <div style={{ display: 'flex', flexDirection: 'column'}}>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: isTabletOrMobile ? 'center' : 'flex-start' }}>
                                     <PassportButton style={{ marginRight: isTabletOrMobile ? '0rem':'1rem', marginBottom: '2rem' }} onClick={() => setChangeName(false)} text="Yes" />
                                     <PassportButton onClick={() => setChangeName(true)} text="No, modify" type="Normal" />
                                 </div>
 
-                                {changeName && (
+                                {changeName == false && (
                                     <textarea
                                         onChange={handleChange}
                                         value={values.name}
