@@ -66,7 +66,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
 
     useEffect(() => {
         if (!getDataReq.data) return
-        formikRef.current?.setFieldValue("name", getDataReq.data.fullname)
+        formikRef.current?.setFieldValue("name", getDataReq.data.collegueName)
         setUsername(`${getDataReq.data.Achivement.User.firstName} ${getDataReq.data.Achivement.User.lastName}`);
         if (getDataReq.data.isFilled) onSuccess()
     }, [getDataReq.loading]);
