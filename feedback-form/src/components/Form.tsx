@@ -83,7 +83,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
 
     return (
         <Formik
-            innerRef={(r) => formikRef.current = r}
+            innerRef={(r) => formikRef.current = r || undefined}
             enableReinitialize
             initialValues={fValues}
             validate={values => {
