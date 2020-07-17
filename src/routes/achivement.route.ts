@@ -109,15 +109,6 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
     },
     trim: true
   },
-  awardFile: {
-    // Custom validators
-    custom: {
-      options: (value, { req, location, path }) => {
-        return req.file != null || req.file != undefined;
-      },
-      errorMessage: "Missing field"
-    },
-  },
 })),asyncHandler(async (req, res) => {
   await sequelize.transaction(async (t) => {
     const a = await AchivementModel
