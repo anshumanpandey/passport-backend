@@ -11,16 +11,16 @@ import sequelize from '../utils/DB';
 
 let storage = multer.diskStorage({
   destination: 'uploads/',
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
 });
 
 var upload = multer({ storage })
 
 export const achivementRoutes = express();
 
-achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),upload.single("awardFile"),validateParams(checkSchema({
+achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), upload.single("awardFile"), validateParams(checkSchema({
   title: {
     in: ['body'],
     exists: {
@@ -109,19 +109,23 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
     },
     trim: true
   },
-})),asyncHandler(async (req, res) => {
+})), asyncHandler(async (req, res) => {
   await sequelize.transaction(async (t) => {
+    //@ts-ignore
+    const data = { ...req.body, UserId: req.user.id }
+    if (req.file) {
+      data.awardFilename = req.file.filename
+    }
     const a = await AchivementModel
-      //@ts-ignore
-      .create({...req.body, awardFilename: req.file.filename,UserId: req.user.id}, { transaction: t });
+      .create(data, { transaction: t });
 
   })
-    
+
   res.send({ success: 'Achivement created' });
 }));
 
-achivementRoutes.get('/achivement/', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),asyncHandler(async (req, res) => {
+achivementRoutes.get('/achivement/', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), asyncHandler(async (req, res) => {
   //@ts-ignore
-  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel, required: false,where: { isFilled: true } }] })
+  const achivements = await AchivementModel.findAll({ where: { UserId: req.user.id }, include: [{ model: FeedbackModel, required: false, where: { isFilled: true } }] })
   res.send(achivements);
 }));
