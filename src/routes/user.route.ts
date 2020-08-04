@@ -107,28 +107,6 @@ userRoutes.post('/register', validateParams(checkSchema({
       negated: true
     },
     trim: true
-  },
-  companyTitle: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
-    trim: true
-  },
-  companyName: {
-    in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
-    trim: true
   }
 })), asyncHandler(async (req, res) => {
   const { password, email,...fields} = req.body;
