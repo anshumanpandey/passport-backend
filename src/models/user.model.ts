@@ -10,7 +10,8 @@ interface UserAttributes {
   password: string,
   phoneNumber: string,
   companyTitle: string,
-  companyName: string
+  companyName: string,
+  profilePic: string
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -49,6 +50,10 @@ export const UserModel = sequelize.define<UserInstance>("User", {
       // allowNull defaults to true
     },
     companyName: {
+      type: DataTypes.STRING
+      // allowNull defaults to true
+    },
+    profilePic: {
       type: DataTypes.STRING
       // allowNull defaults to true
     }

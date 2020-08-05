@@ -9,6 +9,16 @@ import { UserModel } from '../models/user.model';
 import { validateParams } from '../middlewares/routeValidation.middleware';
 import { ApiError } from '../utils/ApiError';
 import { sendForgotPassword } from '../utils/Mail';
+import multer from 'multer';
+
+let storage = multer.diskStorage({
+  destination: 'profilePic/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+
+var upload = multer({ storage })
 
 export const userRoutes = express();
 
@@ -240,4 +250,11 @@ userRoutes.put('/editProfile', jwt({ secret: process.env.JWT_SECRET || 'aa', alg
   delete jsonData.password;
   var token = sign(jsonData, process.env.JWT_SECRET || 'aa');
   res.send({ ...jsonData, token });
+}));
+
+userRoutes.post('/uploadProfilePic', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), upload.single("awardFile"), asyncHandler(async (req, res) => {
+  await UserModel
+  //@ts-expect-error
+  .update({ profilePic: `${req.protocol + '://' + req.get('host')}/profilePic/${req.file.filename}` }, { where: { id: req.user.id }})
+  res.send({ success: 'Achivement created' });
 }));
