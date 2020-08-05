@@ -16,8 +16,7 @@ export const passportRoute = express();
 passportRoute.get('/passport/',jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), asyncHandler(async (req, res) => {
 
   //@ts-expect-error
-  const m = await PassportModel.findAll({ where: { UserId: req.user.id}, include: [{model: AchivementModel}] })
-  console.log(m)
+  const m = await PassportModel.findAll({ where: { UserId: req.user.id}, include: [{model: AchivementModel, include: [{model: FeedbackModel }]}] })
   res.send(m);
 }))
 

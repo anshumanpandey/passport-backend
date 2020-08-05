@@ -78,35 +78,14 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
   },
   titleObteined: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
     trim: true
   },
   resultObteined: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
     trim: true
   },
   valueObteined: {
     in: ['body'],
-    exists: {
-      errorMessage: 'Missing field'
-    },
-    isEmpty: {
-      errorMessage: 'Missing field',
-      negated: true
-    },
     trim: true
   },
 })), asyncHandler(async (req, res) => {
