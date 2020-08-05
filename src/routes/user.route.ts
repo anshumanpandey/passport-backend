@@ -8,6 +8,7 @@ import { hash, compare } from "bcrypt"
 import { UserModel } from '../models/user.model';
 import { validateParams } from '../middlewares/routeValidation.middleware';
 import { ApiError } from '../utils/ApiError';
+import { sendForgotPassword } from '../utils/Mail';
 
 export const userRoutes = express();
 
@@ -49,6 +50,35 @@ userRoutes.post('/login', validateParams(checkSchema({
   delete jsonData.password;
   var token = sign(jsonData, process.env.JWT_SECRET || 'aa', { expiresIn: '9999 years'});
   res.send({ ...jsonData, token });
+}));
+
+userRoutes.post('/forgot', validateParams(checkSchema({
+  email: {
+    in: ['body'],
+    exists: {
+      errorMessage: 'Missing field'
+    },
+    isEmpty: {
+      errorMessage: 'Missing field',
+      negated: true
+    },
+    trim: true
+  }
+})), asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await UserModel.findOne({
+    where: { email },
+    attributes: { exclude: ["createdAt", "updatedAt"]}
+  });
+
+  if (!user) throw new ApiError("Email not registered")
+
+  const password = Math.random().toString(36).substr(2, 5)
+
+  await user.update({ password: await hash(password, 8) })
+  //@ts-expect-error
+  await sendForgotPassword({email, password })
+  res.send({ success: 'Mail sended' });
 }));
 
 userRoutes.post('/register', validateParams(checkSchema({
