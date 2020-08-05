@@ -112,7 +112,7 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
 })), asyncHandler(async (req, res) => {
   await sequelize.transaction(async (t) => {
     //@ts-ignore
-    const data = { ...req.body, UserId: req.user.id }
+    const data = { ...req.body, UserId: req.user.id, PassportId: req.body.passportId }
     if (req.file) {
       data.awardFilename = req.file.filename
     }

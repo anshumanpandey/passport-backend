@@ -3,6 +3,7 @@ import sequelize from "../utils/DB";
 import { DataTypes, Model, Optional } from "sequelize";
 import { UserModel } from "./user.model";
 import { FeedbackAttributes } from "./feedback.model";
+import { PassportModel } from "./passport.model";
 
 interface AchivementAttributes {
   id: string,
@@ -67,9 +68,9 @@ export const AchivementModel = sequelize.define<AchivementInstance>("Achivement"
   },
 })
 
-UserModel.hasOne(AchivementModel, {
+PassportModel.hasMany(AchivementModel, {
   foreignKey: {
     allowNull: false
   }
 });
-AchivementModel.belongsTo(UserModel);
+AchivementModel.belongsTo(PassportModel);
