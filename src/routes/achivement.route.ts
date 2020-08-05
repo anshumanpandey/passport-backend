@@ -93,7 +93,7 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
     //@ts-ignore
     const data = { ...req.body, UserId: req.user.id, PassportId: req.body.passportId }
     if (req.file) {
-      data.awardFilename = req.file.filename
+      data.awardFilename = `${req.protocol + '://' + req.get('host')}/passport/${req.file.filename}`
     }
     const a = await AchivementModel
       .create(data, { transaction: t });
