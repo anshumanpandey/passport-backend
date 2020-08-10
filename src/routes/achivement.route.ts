@@ -100,10 +100,10 @@ achivementRoutes.post('/achivement', jwt({ secret: process.env.JWT_SECRET || 'aa
 
     if (req.body.passportId) {
       const passport = await PassportModel.findByPk(req.body.passportId, { transaction: t })
-      if (!passport) throw new ApiError("Passport not found")
-
-      //@ts-expect-error
-      await passport.addAchivement(a, { transaction: t })
+      if (passport) {
+        //@ts-expect-error
+        await passport.addAchivement(a, { transaction: t })
+      }
     }
 
   })
