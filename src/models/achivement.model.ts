@@ -68,9 +68,12 @@ export const AchivementModel = sequelize.define<AchivementInstance>("Achivement"
   },
 })
 
-PassportModel.hasMany(AchivementModel, {
+PassportModel.belongsToMany(AchivementModel, { through: 'PassportAchivement'});
+AchivementModel.belongsToMany(PassportModel, { through: 'PassportAchivement'});
+
+UserModel.hasOne(AchivementModel, {
   foreignKey: {
     allowNull: false
   }
 });
-AchivementModel.belongsTo(PassportModel);
+AchivementModel.belongsTo(UserModel);

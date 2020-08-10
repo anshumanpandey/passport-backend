@@ -31,14 +31,16 @@ passportRoute.post('/passport/create', jwt({ secret: process.env.JWT_SECRET || '
 })), asyncHandler(async (req, res) => {
   const { name, id } = req.body
 
+  let passport = null
+
   if (id) {
-    await PassportModel.update({ name }, { where: { id }})
+    passport = await PassportModel.update({ name }, { where: { id }})
   } else {
     //@ts-expect-error
-    await PassportModel.create({ name, UserId: req.user.id })
+    passport = await PassportModel.create({ name, UserId: req.user.id })
   }
 
-  res.send({ success: 'Passport created' });
+  res.send(passport);
 }));
 
 passportRoute.delete('/passport', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),validateParams(checkSchema({
