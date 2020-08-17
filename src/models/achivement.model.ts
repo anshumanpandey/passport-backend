@@ -64,7 +64,8 @@ export const AchivementModel = sequelize.define<AchivementInstance>("Achivement"
   },
   awardFilename: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    defaultValue: null,
   },
 })
 
