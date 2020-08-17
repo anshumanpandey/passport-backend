@@ -255,6 +255,7 @@ userRoutes.put('/editProfile', jwt({ secret: process.env.JWT_SECRET || 'aa', alg
 }));
 
 userRoutes.post('/uploadProfilePic', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), upload.single("awardFile"), asyncHandler(async (req, res) => {
+  console.log(req.file)
   await UserModel
   //@ts-expect-error
   .update({ profilePic: `${req.protocol + '://' + req.get('host')}/profilePic/${req.file.filename}` }, { where: { id: req.user.id }})
