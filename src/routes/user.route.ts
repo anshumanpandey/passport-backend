@@ -18,9 +18,9 @@ let storage = multer.diskStorage({
   }
 });
 
-const fileSize = 50 * 1024 * 1024
+const fieldSize = 50 * 1024 * 1024
 
-var upload = multer({ storage, limits: { fileSize } })
+var upload = multer({ storage, limits: { fieldSize } })
 
 export const userRoutes = express();
 
