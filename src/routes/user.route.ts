@@ -258,3 +258,8 @@ userRoutes.post('/uploadProfilePic', jwt({ secret: process.env.JWT_SECRET || 'aa
   .update({ profilePic: `${req.protocol + '://' + req.get('host')}/profilePic/${req.file.filename}` }, { where: { id: req.user.id }})
   res.send({ success: 'Achivement created' });
 }));
+
+userRoutes.post('/getUser', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), asyncHandler(async (req, res) => {
+  //@ts-expect-error
+  res.send(await UserModel.findByPk(req.user.id));
+}));
