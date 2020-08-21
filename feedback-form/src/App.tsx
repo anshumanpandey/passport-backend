@@ -4,6 +4,12 @@ import './App.css';
 import { SuccessMessage } from './components/SuccessMessage';
 import { Form } from './components/Form';
 import { useMediaQuery } from 'react-responsive';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [successSend, setsuccessSend] = useState(false);
@@ -11,6 +17,7 @@ function App() {
 
   return (
     <>
+    <Router>
       <div className="container-fluid">
         <div className="row header">
           <div className="col-12">
@@ -20,8 +27,14 @@ function App() {
           <img style={{ left: isTabletOrMobile ? '5%' : '25%'}} src={passportico} alt="icon" />
         </div>
 
-        {successSend && <SuccessMessage />}
-        {!successSend && <Form onSuccess={() => setsuccessSend(true)} />}
+        <Switch>
+          <Route path="/success">
+            <SuccessMessage />
+          </Route>
+          <Route path="/">
+            <Form onSuccess={() => setsuccessSend(true)} />
+          </Route>
+        </Switch>
 
       </div>
 
@@ -31,6 +44,7 @@ function App() {
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"></script>
+      </Router>
     </>
   );
 }

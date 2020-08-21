@@ -6,6 +6,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { PassportButton } from './PassportButton';
 import { ErrorLabel } from './ErroLabel';
 import { useMediaQuery } from 'react-responsive'
+import { Redirect } from 'react-router-dom';
 
 const Skils = [
     "Web Dev",
@@ -79,6 +80,10 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                 </div>
             </div>
         );
+    }
+
+    if (getDataReq?.data?.isFilled) {
+        return <Redirect to="/dashboard" />
     }
 
     return (
