@@ -57,7 +57,7 @@ export const Passport: React.FC = () => {
               <p style={{ margin: 0, color: "#99879D", fontSize: "16px" }}>{data.User.companyName}</p>
             </div>
             <div>
-              <div style={{ backgroundColor: 'white', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', width: '75%', marginLeft: "auto", marginRight: 'auto' }}>
+              <div style={{ backgroundColor: 'white', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
                 {data?.Achivements.reduce((achievement, next) => {
                   const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                     nextFeedback.skillsWithExperience.forEach((s: any) => {
@@ -86,8 +86,6 @@ export const Passport: React.FC = () => {
                         <div
                           key={f.skill}
                           style={{
-                            cursor: 'pointer',
-                            width: '2.5rem',
                             height: '1rem',
                             display: 'flex',
                             alignItems: 'center',
@@ -114,7 +112,6 @@ export const Passport: React.FC = () => {
                         <div
                           key={f.skill}
                           style={{
-                            cursor: 'pointer',
                             width: '1rem',
                             height: '1rem',
                             display: 'flex',
@@ -172,8 +169,6 @@ export const Passport: React.FC = () => {
                         <div
                           key={f.skill}
                           style={{
-                            cursor: 'pointer',
-                            width: '2.5rem',
                             height: '1rem',
                             display: 'flex',
                             alignItems: 'center',
@@ -200,7 +195,6 @@ export const Passport: React.FC = () => {
                         <div
                           key={f.skill}
                           style={{
-                            cursor: 'pointer',
                             width: '1rem',
                             height: '1rem',
                             display: 'flex',
