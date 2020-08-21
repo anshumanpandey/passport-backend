@@ -10,6 +10,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Passport } from './components/Passport';
 
 function App() {
   const [successSend, setsuccessSend] = useState(false);
@@ -30,6 +31,9 @@ function App() {
         <Switch>
           <Route path="/success">
             <SuccessMessage />
+          </Route>
+          <Route path="/passport/:id">
+            <Passport />
           </Route>
           <Route path="/">
             <Form onSuccess={() => setsuccessSend(true)} />

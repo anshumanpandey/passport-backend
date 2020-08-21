@@ -25,7 +25,7 @@ export const PassportModel = sequelize.define<PassportInstance>("Passport", {
   },
 })
 
-UserModel.hasOne(PassportModel, {
+UserModel.hasMany(PassportModel, {
   foreignKey: {
     allowNull: false
   }

@@ -148,6 +148,13 @@ achivementRoutes.post('/achivement/link', jwt({ secret: process.env.JWT_SECRET |
   res.send({ success: 'Achivement created' });
 }));
 
+achivementRoutes.get('/download/:id',asyncHandler(async (req, res) => {
+  const m = await AchivementModel.findByPk(req.params.id)
+  if (!m?.awardFilename) throw new ApiError("Achievement has not file")
+  const file = `${__dirname}/uploads/${m.awardFilename.split("/").pop()}`;
+  res.download(file); 
+}))
+
 achivementRoutes.post('/achivement/unlink', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }), upload.single("awardFile"), validateParams(checkSchema({
   achivementId: {
     in: ['body'],
