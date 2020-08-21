@@ -12,6 +12,8 @@ export const Passport: React.FC = () => {
     url: `${process.env.REACT_APP_API_URL}/passport/${id}`,
   })
 
+  const [donwloadReq, doDownload] = useAxios<PassportResponse>({}, { manual: true })
+
   if (loading) {
     return (
       <div style={{ width: '100%', height: '100%', marginLeft: 'auto', marginRight: 'auto', backgroundColor: "#FAF9FE" }} className="row middle">
@@ -50,9 +52,9 @@ export const Passport: React.FC = () => {
         <div className="col-8" style={{ backgroundColor: 'white', paddingLeft: '1rem', paddingRight: '1rem', flexDirection: 'column', display: 'flex', width: '77.5%', minHeight: '100%', marginLeft: "auto", marginRight: 'auto' }}>
           <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
             <div>
-              <p style={{ margin: 0, fontSize: "25px", fontFamily: 'RedHatBold'}}>{data.User.firstName} {data.User.lastName}</p>
-              <p style={{ margin: 0,color: "#99879D", fontSize: "16px", fontFamily: "ABeeZeeRegular"}}>{data.User.companyTitle}</p>
-              <p style={{ margin: 0,color: "#99879D", fontSize: "16px"}}>{data.User.companyName}</p>
+              <p style={{ margin: 0, fontSize: "25px", fontFamily: 'RedHatBold' }}>{data.User.firstName} {data.User.lastName}</p>
+              <p style={{ margin: 0, color: "#99879D", fontSize: "16px", fontFamily: "ABeeZeeRegular" }}>{data.User.companyTitle}</p>
+              <p style={{ margin: 0, color: "#99879D", fontSize: "16px" }}>{data.User.companyName}</p>
             </div>
             <div>
               <div style={{ backgroundColor: 'white', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', width: '75%', marginLeft: "auto", marginRight: 'auto' }}>
@@ -228,7 +230,7 @@ export const Passport: React.FC = () => {
                   })
                 }
               </div>
-              <h6 style={{ textAlign: 'right', fontFamily: 'ABeeZeeRegular',}}>{data?.Achivements.length} recommendations</h6>
+              <h6 style={{ textAlign: 'right', fontFamily: 'ABeeZeeRegular', }}>{data?.Achivements.length} recommendations</h6>
             </div>
           </div>
           {data?.Achivements.map(p => {
@@ -251,16 +253,13 @@ export const Passport: React.FC = () => {
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                       <p style={{ fontFamily: 'ABeeZeeRegular', color: 'rgba(18, 14, 33, 0.54)', fontSize: '12px', marginRight: "0.5rem" }}>{p.year}</p>
                       {p.awardFilename && (
-                        <div style={{ backgroundColor: '#FBEAFF', borderRadius: '4px', alignSelf: 'center', display: 'flex' }}>
+                        <div onClick={() => window.open(`${process.env.REACT_APP_API_URL}/download/${p.id}`, "_blank")} style={{  cursor: 'pointer', backgroundColor: '#FBEAFF', borderRadius: '4px', alignSelf: 'center', display: 'flex' }}>
                           <p style={{ fontFamily: 'ABeeZeeRegular', fontSize: '12px', marginTop: '0.2rem', marginBottom: '0.2rem', marginLeft: '0.5rem', marginRight: '0.5rem' }}>Certification</p>
                         </div>
                       )}
-                      <div style={{ backgroundColor: '#FBEAFF', borderRadius: '4px', alignSelf: 'center', display: 'flex' }}>
-                        <p style={{ fontFamily: 'ABeeZeeRegular', fontSize: '12px', marginTop: '0.2rem', marginBottom: '0.2rem', marginLeft: '0.5rem', marginRight: '0.5rem' }}>Certification</p>
-                      </div>
                     </div>
                     <div style={{ alignItems: "center", display: "flex" }}>
-                      <p style={{ fontFamily: 'ABeeZeeRegular', color: "rgba(18, 14, 33, 0.54)",margin: 0, fontSize: '14px' }}>{p.titleObteined}</p>
+                      <p style={{ fontFamily: 'ABeeZeeRegular', color: "rgba(18, 14, 33, 0.54)", margin: 0, fontSize: '14px' }}>{p.titleObteined}</p>
                     </div>
                   </div>
                 </div>

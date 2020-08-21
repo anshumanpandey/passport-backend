@@ -151,7 +151,7 @@ achivementRoutes.post('/achivement/link', jwt({ secret: process.env.JWT_SECRET |
 achivementRoutes.get('/download/:id',asyncHandler(async (req, res) => {
   const m = await AchivementModel.findByPk(req.params.id)
   if (!m?.awardFilename) throw new ApiError("Achievement has not file")
-  const file = `${__dirname}/uploads/${m.awardFilename.split("/").pop()}`;
+  const file = `${__dirname}/../../uploads/${m.awardFilename.split("/").pop()}`;
   res.download(file); 
 }))
 
