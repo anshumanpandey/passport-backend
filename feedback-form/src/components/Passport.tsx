@@ -57,7 +57,7 @@ export const Passport: React.FC = () => {
               <p style={{ margin: 0, color: "#99879D", fontSize: "16px" }}>{data.User.companyName}</p>
             </div>
             <div>
-              <div style={{ backgroundColor: 'white', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
+              <div style={{ backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
                 {data?.Achivements.reduce((achievement, next) => {
                   const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                     nextFeedback.skillsWithExperience.forEach((s: any) => {
@@ -141,7 +141,7 @@ export const Passport: React.FC = () => {
                   })
                 }
               </div>
-              <div style={{ backgroundColor: 'white', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', width: '75%', marginLeft: "auto", marginRight: 'auto' }}>
+              <div style={{ backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
                 {data?.Achivements.reduce((achievement, next) => {
                   const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                     nextFeedback.skillsWithImproving.forEach((s: any) => {
@@ -261,8 +261,9 @@ export const Passport: React.FC = () => {
                   return (
                     <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', width: '70%', marginLeft: 'auto' }}>
                       <div style={{ marginTop: '1rem' }}>
-                        <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold" }}>{f.collegueRole}</p>
+                        <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold" }}>{f.collegueRole} at {p.company}</p>
                         <p style={{ fontSize: "18px", color: "#120E21", fontFamily: "RedHatRegular" }}>{f.collegueName}</p>
+                        <p style={{ fontSize: "12", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{p.year}</p>
                       </div>
                       <div style={{ marginTop: '1rem', width: '50%' }}>
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'normal' }}>
@@ -271,8 +272,6 @@ export const Passport: React.FC = () => {
                               <div
                                 key={i}
                                 style={{
-                                  cursor: 'pointer',
-                                  width: '2.5rem',
                                   height: '1rem',
                                   display: 'flex',
                                   alignItems: 'center',
@@ -308,8 +307,6 @@ export const Passport: React.FC = () => {
                               <div
                                 key={i}
                                 style={{
-                                  cursor: 'pointer',
-                                  width: '2.5rem',
                                   height: '1rem',
                                   display: 'flex',
                                   alignItems: 'center',
