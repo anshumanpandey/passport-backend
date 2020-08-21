@@ -43,11 +43,11 @@ export const FeedbackModel = sequelize.define<FeedbackInstance>("Feedback", {
     allowNull: true
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(2000),
     allowNull: true
   },
   engagementDescription: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(2000),
     allowNull: true
   },
   wouldReachAgain: {
