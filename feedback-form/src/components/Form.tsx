@@ -61,7 +61,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
         method: 'POST'
     }, { manual: true })
 
-    const [getDataReq] = useAxios({
+    const [getDataReq, refetch] = useAxios({
         url: `${process.env.REACT_APP_API_URL}/feedback/meta/${params.token}`,
     })
 
@@ -83,7 +83,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
     }
 
     if (getDataReq?.data?.isFilled) {
-        return <Redirect to="/dashboard" />
+        return <Redirect to="/success" />
     }
 
     return (
@@ -122,6 +122,7 @@ export const Form: React.FC<Props> = ({ onSuccess }) => {
                 })
                     .then(() => {
                         onSuccess()
+                        refetch()
                     })
 
             }}
