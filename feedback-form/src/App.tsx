@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-    <Router>
+    <Router basename="/feedback">
       <div className="container-fluid">
         <div className="row header">
           <div className="col-12">
