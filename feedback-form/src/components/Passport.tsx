@@ -261,8 +261,8 @@ export const Passport: React.FC = () => {
                   return (
                     <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', width: '70%', marginLeft: 'auto' }}>
                       <div style={{ marginTop: '1rem' }}>
-                        <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold" }}>{f.collegueRole} at {p.company}</p>
-                        <p style={{ fontSize: "18px", color: "#120E21", fontFamily: "RedHatRegular" }}>{f.collegueName}</p>
+                        <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold", margin: 0 }}>{f.collegueRole} at {p.company}</p>
+                        <p style={{ fontSize: "18px", color: "#120E21", fontFamily: "RedHatRegular", marginTop: 0 }}>{f.collegueName}</p>
                         <p style={{ fontSize: "12", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{p.year}</p>
                       </div>
                       <div style={{ marginTop: '1rem', width: '50%' }}>
