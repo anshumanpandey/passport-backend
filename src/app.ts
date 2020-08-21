@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 
-app.use(express.static(join(__dirname, '..', 'feedback-form', 'build')));
-app.get('/feedback', function(req, res) {
+app.use("/feedbackAssets",express.static(join(__dirname, '..', 'feedback-form', 'build')));
+app.get('/feedback/*', function(req, res) {
     res.sendFile(join(__dirname, '..', 'feedback-form', 'build', 'index.html'));
   });
   
