@@ -22,7 +22,11 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 
-app.use("/feedback",express.static(join(__dirname, '..', 'feedback-form', 'build')));
+app.use(express.static(join(__dirname, '..', 'feedback-form', 'build')));
+app.get('/feedback', function(req, res) {
+    res.sendFile(join(__dirname, '..', 'feedback-form', 'build', 'index.html'));
+  });
+  
 app.use("/passport",express.static(join(__dirname, '..', 'uploads')));
 app.use("/profilePic",express.static(join(__dirname, '..', 'profilePic')));
 app.use(express.static(join(__dirname, '../templates')));
