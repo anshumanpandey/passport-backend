@@ -5,9 +5,11 @@ import sequelize from './utils/DB';
 import { routes } from './routes';
 import { ApiError } from './utils/ApiError';
 var morgan = require('morgan')
+var cors = require('cors')
 
 const app = express();
 
+app.use(cors())
 app.use(morgan("tiny"))
 app.use(bodyParser.json({
     limit: '50mb',

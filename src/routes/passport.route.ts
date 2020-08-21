@@ -7,9 +7,8 @@ import { validateParams } from '../middlewares/routeValidation.middleware';
 import { FeedbackModel } from '../models/feedback.model';
 import { ApiError } from '../utils/ApiError';
 import { AchivementModel } from '../models/achivement.model';
-import sequelize from '../utils/DB';
-import { sendEmail } from '../utils/Mail';
 import { PassportModel } from '../models/passport.model';
+import { UserModel } from '../models/user.model';
 
 export const passportRoute = express();
 
@@ -18,6 +17,13 @@ passportRoute.get('/passport/',jwt({ secret: process.env.JWT_SECRET || 'aa', alg
   //@ts-expect-error
   const m = await PassportModel.findAll({ where: { UserId: req.user.id}, include: [{model: AchivementModel, include: [{model: FeedbackModel }]}] })
   res.send(m);
+}))
+
+passportRoute.get('/passport/:id',asyncHandler(async (req, res) => {
+  const m = await PassportModel.findByPk(req.params.id, { include: [{ model: UserModel }, {model: AchivementModel, include: [{model: FeedbackModel }]}] })
+  if (!m) throw new ApiError("Passport not found!")
+  const json = m?.toJSON();
+  res.send(json);
 }))
 
 passportRoute.post('/passport/create', jwt({ secret: process.env.JWT_SECRET || 'aa', algorithms: ['HS256'] }),validateParams(checkSchema({
