@@ -239,7 +239,7 @@ export const Passport: React.FC = () => {
           {data?.Achivements.map(p => {
             return (
               <div style={{ display: "flex", flexDirection: 'column' }}>
-                <div style={{ paddingLeft: '1rem', paddingRight: '1rem', paddingBottom: '0.5rem', paddingTop: '0.5rem',width: 'auto', border: "1px solid rgba(153, 135, 157, 0.24)", boxShadow: "inset -16px 16px 56px rgba(251, 234, 255, 0.32)", borderRadius: "5px" }}>
+                <div style={{ paddingLeft: '1rem', paddingRight: '1rem', paddingBottom: '0.5rem', paddingTop: '0.5rem', marginBottom: '1rem',width: 'auto', border: "1px solid rgba(153, 135, 157, 0.24)", boxShadow: "inset -16px 16px 56px rgba(251, 234, 255, 0.32)", borderRadius: "5px" }}>
                   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <p style={{ fontFamily: 'RedHatRegular', fontSize: "20px", }}>{p.title}</p>
                     <p style={{ fontFamily: 'ABeeZeeRegular', color: "#99879D", fontSize: '12px', minWidth: '50%' }}>{p.description}</p>
@@ -271,7 +271,7 @@ export const Passport: React.FC = () => {
                 {p.Feedbacks.map(f => {
                   return (
                     <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginLeft: 'auto' }}>
-                      <div style={{ marginTop: '1rem' }}>
+                      <div>
                         <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold", margin: 0 }}>{f.collegueRole} at {p.company}</p>
                         <p style={{ fontSize: "18px", color: "#120E21", fontFamily: "RedHatRegular", marginTop: 0 }}>{f.collegueName}</p>
                         <p style={{ fontSize: "12", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{p.year}</p>
