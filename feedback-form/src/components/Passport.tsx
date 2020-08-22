@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import MoonLoader from "react-spinners/MoonLoader";
 import { PassportResponse } from '../types/PassportResponse';
 import hat from "../img/hat.png"
+import { Header } from './Header';
 
 export const Passport: React.FC = () => {
   let { id } = useParams();
@@ -36,6 +37,7 @@ export const Passport: React.FC = () => {
 
   return (
     <>
+      <Header noLogo={true} />
       <div className="row" style={{ backgroundColor: "#FAF9FE" }}>
         <div className="col-8" style={{ marginTop: '2.5rem', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', width: '80%', marginLeft: "auto", marginRight: 'auto' }}>
           <div>
@@ -104,7 +106,7 @@ export const Passport: React.FC = () => {
                                 paddingLeft: '0.1rem',
                                 paddingRight: '0.1rem',
                                 fontFamily: 'ABeeZeeRegular',
-                                fontSize: '9px',
+                                fontSize: '12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 textAlign: 'center',
@@ -143,7 +145,7 @@ export const Passport: React.FC = () => {
                       })
                     }
                   </div>
-                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
+                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto', marginTop: '1rem' }}>
                     {data?.Achivements.reduce((achievement, next) => {
                       const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                         nextFeedback.skillsWithImproving.forEach((s: any) => {
@@ -187,7 +189,7 @@ export const Passport: React.FC = () => {
                                 paddingLeft: '0.1rem',
                                 paddingRight: '0.1rem',
                                 fontFamily: 'ABeeZeeRegular',
-                                fontSize: '9px',
+                                fontSize: '12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 textAlign: 'center',
@@ -239,15 +241,15 @@ export const Passport: React.FC = () => {
               <div style={{ display: "flex", flexDirection: 'column' }}>
                 <div style={{ paddingLeft: '1rem', paddingRight: '1rem', paddingBottom: '0.5rem', paddingTop: '0.5rem',width: 'auto', border: "1px solid rgba(153, 135, 157, 0.24)", boxShadow: "inset -16px 16px 56px rgba(251, 234, 255, 0.32)", borderRadius: "5px" }}>
                   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <p style={{ fontFamily: 'RedHatRegular' }}>{p.title}</p>
-                    <p style={{ fontFamily: 'ABeeZeeRegular', color: "#99879D", fontSize: '12px' }}>{p.description}</p>
+                    <p style={{ fontFamily: 'RedHatRegular', fontSize: "20px", }}>{p.title}</p>
+                    <p style={{ fontFamily: 'ABeeZeeRegular', color: "#99879D", fontSize: '12px', minWidth: '50%' }}>{p.description}</p>
                     <img src={hat} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <p style={{ fontFamily: 'RedHatRegular', fontSize: "20px", margin: 0, alignSelf: "flex-end" }}>Additional</p>
+                    <p style={{ fontFamily: 'RedHatRegular', fontSize: "15px", margin: 0, alignSelf: "flex-end" }}>Additional</p>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                      <p style={{ fontFamily: 'RedHatRegular' }}>{p.valueObteined}</p>
-                      <p style={{ fontFamily: 'RedHatRegular' }}>{p.resultObteined}</p>
+                      <p style={{ fontFamily: 'RedHatRegular', marginBottom: 0 }}>{p.valueObteined}</p>
+                      <p style={{ fontFamily: 'RedHatRegular', marginBottom: 0 }}>{p.resultObteined}</p>
                     </div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -268,13 +270,13 @@ export const Passport: React.FC = () => {
                 </div>
                 {p.Feedbacks.map(f => {
                   return (
-                    <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', width: '70%', marginLeft: 'auto' }}>
+                    <div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginLeft: 'auto' }}>
                       <div style={{ marginTop: '1rem' }}>
                         <p style={{ fontSize: "20px", color: "#120E21", fontFamily: "RedHatBold", margin: 0 }}>{f.collegueRole} at {p.company}</p>
                         <p style={{ fontSize: "18px", color: "#120E21", fontFamily: "RedHatRegular", marginTop: 0 }}>{f.collegueName}</p>
                         <p style={{ fontSize: "12", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{p.year}</p>
                       </div>
-                      <div style={{ marginTop: '1rem', width: '50%' }}>
+                      <div style={{ marginTop: '1rem', width: '65%' }}>
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'normal' }}>
                           {f.skillsWithExperience.map((i: string) => {
                             return (
@@ -298,7 +300,7 @@ export const Passport: React.FC = () => {
                                   paddingLeft: '0.1rem',
                                   paddingRight: '0.1rem',
                                   fontFamily: 'ABeeZeeRegular',
-                                  fontSize: '9px',
+                                  fontSize: '12px',
                                   display: 'flex',
                                   alignItems: 'center',
                                   textAlign: 'center',
@@ -308,7 +310,7 @@ export const Passport: React.FC = () => {
                             );
                           })}
                         </div>
-                        <p style={{ fontSize: "10px", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{f.description}</p>
+                        <p style={{ fontSize: "13px", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{f.description}</p>
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'normal' }}>
 
                           {f.skillsWithImproving.map((i: string) => {
@@ -333,7 +335,7 @@ export const Passport: React.FC = () => {
                                   paddingLeft: '0.1rem',
                                   paddingRight: '0.1rem',
                                   fontFamily: 'ABeeZeeRegular',
-                                  fontSize: '9px',
+                                  fontSize: '12px',
                                   display: 'flex',
                                   alignItems: 'center',
                                   textAlign: 'center',
@@ -343,7 +345,7 @@ export const Passport: React.FC = () => {
                             );
                           })}
                         </div>
-                        <p style={{ fontSize: "10px", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{f.engagementDescription}</p>
+                        <p style={{ fontSize: "13px", color: "#99879D", fontFamily: "ABeeZeeRegular" }}>{f.engagementDescription}</p>
                       </div>
                     </div>
                   );

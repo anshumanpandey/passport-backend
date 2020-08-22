@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import passportico from './img/passportico.svg';
 import './App.css';
 import { SuccessMessage } from './components/SuccessMessage';
 import { Form } from './components/Form';
@@ -14,20 +13,11 @@ import { Passport } from './components/Passport';
 
 function App() {
   const [successSend, setsuccessSend] = useState(false);
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   return (
     <>
     <Router basename="/feedback">
       <div className="container-fluid">
-        <div className="row header">
-          <div className="col-12">
-            <h2 style={{ position: 'relative',zIndex: 3 }}>Passport</h2>
-            <h5 style={{ position: 'relative',zIndex: 3 }}>Your career companion</h5>
-          </div>
-          <img style={{ left: isTabletOrMobile ? '5%' : '25%'}} src={passportico} alt="icon" />
-        </div>
-
         <Switch>
           <Route path="/success">
             <SuccessMessage />
