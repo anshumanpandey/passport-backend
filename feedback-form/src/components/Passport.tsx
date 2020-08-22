@@ -61,7 +61,7 @@ export const Passport: React.FC = () => {
               </div>
               <div className="col-md-6">
                 <div className="row" style={{ height: '100%' }}>
-                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto' }}>
+                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto', marginTop: '0.5rem' }}>
                     {data?.Achivements.reduce((achievement, next) => {
                       const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                         nextFeedback.skillsWithExperience.forEach((s: any) => {
@@ -145,7 +145,7 @@ export const Passport: React.FC = () => {
                       })
                     }
                   </div>
-                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto', marginTop: '1rem' }}>
+                  <div className="col-md-12" style={{ flexWrap: 'wrap',backgroundColor: 'white', justifyContent: 'flex-end', display: 'flex', flexDirection: 'row', marginLeft: "auto", marginRight: 'auto', marginTop: '0.5rem' }}>
                     {data?.Achivements.reduce((achievement, next) => {
                       const feedbackSkills = next.Feedbacks.reduce((skillsArr: any[], nextFeedback: any) => {
                         nextFeedback.skillsWithImproving.forEach((s: any) => {
