@@ -240,16 +240,10 @@ export const Passport: React.FC = () => {
             return (
               <div style={{ display: "flex", flexDirection: 'column' }}>
                 <div style={{ paddingLeft: '1rem', paddingRight: '1rem', paddingBottom: '0.5rem', paddingTop: '0.5rem', marginBottom: '1rem',width: 'auto', border: "1px solid rgba(153, 135, 157, 0.24)", boxShadow: "inset -16px 16px 56px rgba(251, 234, 255, 0.32)", borderRadius: "5px" }}>
-                  <div className="row" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: "0.5rem", paddingRight: "0.5rem" }}>
-                    <div>
-                      <p style={{ fontFamily: 'RedHatRegular', fontSize: "20px", }}>{p.title}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: 'ABeeZeeRegular', color: "#99879D", fontSize: '12px', minWidth: '50%' }}>{p.description}</p>
-                    </div>
-                    <div>
-                      <img src={hat} />
-                    </div>
+                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <p style={{ fontFamily: 'RedHatRegular', fontSize: "20px", }}>{p.title}</p>
+                    <p style={{ fontFamily: 'ABeeZeeRegular', color: "#99879D", fontSize: '12px', minWidth: '50%' }}>{p.description}</p>
+                    <img style={{ height: "55px", width: "46px", objectFit: "contain" }} src={hat} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <p style={{ fontFamily: 'RedHatRegular', fontSize: "15px", margin: 0, alignSelf: "flex-end" }}>Additional</p>
