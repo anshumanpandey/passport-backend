@@ -88,7 +88,7 @@ export const Passport: React.FC = () => {
                             <div
                               key={f.skill}
                               style={{
-                                height: '1rem',
+                                minHeight: '1rem',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -114,8 +114,8 @@ export const Passport: React.FC = () => {
                             <div
                               key={f.skill}
                               style={{
-                                width: '1rem',
-                                height: '1rem',
+                                minWidth: '1rem',
+                                minHeight: '1rem',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -171,7 +171,7 @@ export const Passport: React.FC = () => {
                             <div
                               key={f.skill}
                               style={{
-                                height: '1rem',
+                                minHeight: '1rem',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -197,8 +197,8 @@ export const Passport: React.FC = () => {
                             <div
                               key={f.skill}
                               style={{
-                                width: '1rem',
-                                height: '1rem',
+                                minWidth: '1rem',
+                                minHeight: '1rem',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -281,7 +281,7 @@ export const Passport: React.FC = () => {
                               <div
                                 key={i}
                                 style={{
-                                  height: '1rem',
+                                  minHeight: '1rem',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
@@ -316,7 +316,7 @@ export const Passport: React.FC = () => {
                               <div
                                 key={i}
                                 style={{
-                                  height: '1rem',
+                                  minHeight: '1rem',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
