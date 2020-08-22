@@ -39,9 +39,9 @@ export const Passport: React.FC = () => {
     <>
       <Header noLogo={true} />
       <div className="row" style={{ backgroundColor: "#FAF9FE" }}>
-        <div className="col-8" style={{ marginTop: '2.5rem', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', padding: 0 ,marginLeft: "auto", marginRight: 'auto' }}>
+        <div className="col-8" style={{ marginTop: '2.5rem', marginBottom: "1rem", justifyContent: 'space-between', display: 'flex', flexDirection: 'row', padding: 0 ,marginLeft: "auto", marginRight: 'auto' }}>
           <div>
-            <img style={{ height: "100px", width: "100px", borderRadius: '50px' }} src={data.User.profilePic ? data.User.profilePic : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} />
+            <img style={{ height: "auto", width: "13%", borderRadius: '50px' }} src={data.User.profilePic ? data.User.profilePic : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} />
           </div>
           <div style={{ width: '18rem', backgroundColor: "white", border: "1px solid rgba(153, 135, 157, 0.24)", borderRadius: "5px", alignSelf: 'center' }}>
             <p style={{ color: '#120E21', fontSize: '20px', fontFamily: 'RedHatBold', marginLeft: '4%', marginBottom: '1.2rem', marginTop: '1.2rem' }}>
