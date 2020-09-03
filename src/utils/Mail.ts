@@ -24,7 +24,7 @@ export async function sendEmail({ email, token, name, title, user, achivement, f
             readFileSync(join(__dirname, '..', '..', 'templates', 'mail.html'), 
             { encoding: 'utf8' }), {
                 assets_url: process.env.ASSETS_URL,
-                form_url: `${process.env.API_URL}/feedback/form?token=${token}&name=${name}&title=${title}`,
+                form_url: `${process.env.REACT_APP_API_URL}/feedback/form?token=${token}&name=${name}&title=${title}`,
                 user,
                 achivement,
                 feedback,
