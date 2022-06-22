@@ -41,7 +41,7 @@
     "pg-hstore": "^2.3.3",
     "query-string": "^6.13.1",
     "sequelize": "^6.2.4",
-    "sqlite3": "^5.0.0",
+    "sqlite3": "^5.0.3",
     "ts-node": "^8.10.2",
     "tsc": "^1.20150623.0",
     "typescript": "^3.9.6"
